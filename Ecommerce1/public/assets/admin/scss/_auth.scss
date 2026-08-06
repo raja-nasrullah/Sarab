@@ -1,0 +1,418 @@
+// Auth + standalone (no-sidebar) layouts: login, register, error pages
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse 60% 80% at 20% 30%, rgba(26,187,156,0.06), transparent),
+    radial-gradient(ellipse 60% 80% at 80% 70%, rgba(66,153,225,0.05), transparent),
+    var(--body-bg);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 32px;
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+
+.auth-brand .brand-icon {
+  width: 32px; 
+  height: 32px;
+  background: var(--primary);
+  border-radius: 7px;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  color: white; 
+  font-weight: 700; 
+  font-size: 14px;
+}
+
+.auth-brand .brand-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.2px;
+}
+
+.auth-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+  text-align: center;
+}
+
+.auth-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.auth-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px 0;
+  font-size: 12.5px;
+}
+
+.auth-actions a { 
+  color: var(--primary); 
+  font-weight: var(--font-weight-medium); 
+  text-decoration: none;
+}
+
+.auth-actions a:hover {
+  text-decoration: underline;
+}
+
+.auth-divider {
+  display: flex; 
+  align-items: center; 
+  gap: var(--space-3);
+  margin: 20px 0;
+  color: var(--text-muted);
+  font-size: 11.5px;
+}
+
+.auth-divider::before, 
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-color);
+}
+
+.auth-footer {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin-top: 20px;
+}
+
+.auth-footer a { 
+  color: var(--primary); 
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+// Form group styling for auth pages
+.auth-card .form-group {
+  margin-bottom: 16px;
+}
+
+.auth-card .form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.auth-card .input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.auth-card .input-icon {
+  position: absolute;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.auth-card .form-control {
+  width: 100%;
+  padding: 8px 12px 8px 38px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg-body);
+  transition: border-color 150ms, box-shadow 150ms;
+}
+
+.auth-card .form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26, 187, 156, 0.15);
+}
+
+.auth-card .form-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.auth-card .form-check input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+// Alert styles for auth page
+.auth-card .alert {
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+
+.auth-card .alert-success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.auth-card .alert-danger {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+// Demo credentials
+.demo-credentials {
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--bg-body);
+  border-radius: var(--radius);
+  font-size: 12px;
+  color: var(--text-muted);
+  border: 1px dashed var(--border-color);
+  text-align: center;
+}
+
+.demo-credentials strong {
+  color: var(--text);
+}
+
+// Error pages (404, 500, 403)
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--body-bg);
+  text-align: center;
+}
+
+.error-content { 
+  max-width: 500px; 
+}
+
+.error-code {
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -3px;
+  background: linear-gradient(135deg, var(--primary), var(--azure));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 8px;
+}
+
+.error-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.error-message {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.error-actions {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+}
+
+.auth-success {
+  text-align: center;
+  padding: 16px 0;
+}
+
+.auth-success svg { 
+  margin: 0 auto 8px; 
+  display: block; 
+}
+
+.auth-success .success-title { 
+  font-size: 16px; 
+  font-weight: var(--font-weight-bold); 
+  color: var(--text); 
+  margin-bottom: 4px; 
+}
+
+.auth-success .success-desc { 
+  font-size: 13px; 
+  color: var(--text-secondary); 
+  line-height: 1.5; 
+}
+
+.form-hint {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+// Status pages (maintenance, coming_soon) — shared helpers on top of .error-page
+.status-page-icon {
+  width: 80px; 
+  height: 80px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: var(--primary-lt);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-page-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin: 20px 0 24px;
+  text-align: left;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+
+.status-page-meta .meta-label {
+  font-size: 10.5px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.status-page-meta .meta-value {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: var(--font-weight-medium);
+}
+
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+  margin: 24px 0;
+}
+
+.countdown-cell {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 14px 8px;
+}
+
+.countdown-cell .num {
+  font-size: 28px;
+  font-weight: var(--font-weight-bold);
+  color: var(--text);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1px;
+}
+
+.countdown-cell .lbl {
+  font-size: 10.5px;
+  font-weight: var(--font-weight-medium);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+@media (max-width: 480px) {
+  .countdown-cell .num { font-size: 22px; }
+}
+
+.coming-soon-form {
+  display: flex;
+  gap: var(--space-2);
+  align-items: stretch;
+}
+
+.coming-soon-form .input-group { 
+  flex: 1; 
+}
+
+.coming-soon-success {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--green-lt);
+  color: var(--green);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: var(--font-weight-medium);
+}
+
+// ============================================
+// HIDE SIDEBAR, HEADER, FOOTER ON AUTH PAGES
+// ============================================
+body[data-page="login"],
+body[data-page="register"],
+body[data-page="forgot-password"],
+body[data-page="lock-screen"],
+body[data-page="verify-2fa"] {
+    .sidebar {
+        display: none !important;
+    }
+    
+    .topbar {
+        display: none !important;
+    }
+    
+    .footer {
+        display: none !important;
+    }
+    
+    .main {
+        margin-left: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    .page-wrapper {
+        padding: 0 !important;
+    }
+}
