@@ -22,9 +22,6 @@
             <div class="sovcat active" data-cat="all">
                 <img src="{{ asset('assets/website/img/menu/1.jpg') }}" alt=""> All Items
             </div>
-            <div class="sovcat active" data-cat="all">
-                <img src="{{ asset('assets/website/img/menu/1.jpg') }}" alt=""> testing3
-            </div>
             <div class="sovcat" data-cat="burgers">
                 <img src="{{ asset('assets/website/img/menu/1.jpg') }}" alt=""> Burgers
             </div>
@@ -39,6 +36,9 @@
             </div>
             <div class="sovcat" data-cat="pasta">
                 <img src="{{ asset('assets/website/img/menu/5.jpg') }}" alt=""> Pasta
+            </div>
+            <div class="sovcat active" data-cat="all">
+                <img src="{{ asset('assets/website/img/menu/1.jpg') }}" alt=""> testing3
             </div>
             <div class="sovcat" data-cat="desserts">
                 <img src="{{ asset('assets/website/img/menu/6.jpg') }}" alt=""> Desserts
