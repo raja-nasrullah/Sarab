@@ -23,7 +23,7 @@
                 <img src="{{ asset('assets/website/img/menu/1.jpg') }}" alt=""> All Items
             </div>
             <div class="sovcat active" data-cat="all">
-                <img src="{{ asset('assets/website/img/menu/1.jpg') }}" alt=""> testing
+                <img src="{{ asset('assets/website/img/menu/1.jpg') }}" alt=""> testing3
             </div>
             <div class="sovcat" data-cat="burgers">
                 <img src="{{ asset('assets/website/img/menu/1.jpg') }}" alt=""> Burgers
