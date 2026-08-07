@@ -13,21 +13,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      
-      - name: Set Git config
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-      
-      - name: Auto commit if changes exist
-        run: |
-          if ! git diff --quiet; then
-            git add .
-            git commit -m "Auto commit: $(date)"
-            git push origin HEAD:main
-          fi
       
       - name: Deploy to AWS EC2
         env:
@@ -40,10 +25,15 @@ jobs:
           chmod 600 ~/.ssh/deploy_key.pem
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key.pem $AWS_USER@$AWS_HOST << 'EOF'
             cd /var/www/Sarab
-            git pull origin main
-            composer install --no-dev
-            php artisan migrate --force
-            php artisan cache:clear
-            php artisan config:clear
+            sudo git config --global --add safe.directory /var/www/Sarab
+            sudo git fetch origin main
+            sudo git reset --hard origin/main
+            sudo chown -R www-data:www-data /var/www/Sarab
+            sudo composer install --no-dev --optimize-autoloader
+            sudo php artisan migrate --force
+            sudo php artisan cache:clear
+            sudo php artisan config:clear
+            sudo php artisan view:clear
             sudo systemctl reload nginx
+            echo "✅ Deployment successful!"
           EOF
