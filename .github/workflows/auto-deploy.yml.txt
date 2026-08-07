@@ -1,0 +1,49 @@
+name: Auto Commit and Deploy to AWS
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Set Git config
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+      
+      - name: Auto commit if changes exist
+        run: |
+          if ! git diff --quiet; then
+            git add .
+            git commit -m "Auto commit: $(date)"
+            git push origin HEAD:main
+          fi
+      
+      - name: Deploy to AWS EC2
+        env:
+          DEPLOY_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
+          AWS_HOST: ${{ secrets.AWS_HOST }}
+          AWS_USER: ${{ secrets.AWS_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_KEY" > ~/.ssh/deploy_key.pem
+          chmod 600 ~/.ssh/deploy_key.pem
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key.pem $AWS_USER@$AWS_HOST << 'EOF'
+            cd /var/www/Sarab
+            git pull origin main
+            composer install --no-dev
+            php artisan migrate --force
+            php artisan cache:clear
+            php artisan config:clear
+            sudo systemctl reload nginx
+          EOF
