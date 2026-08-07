@@ -134,7 +134,7 @@
 <section id="category">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
-            <span class="slbl">What We Offer</span>
+            <span class="slbl">What We Offering</span>
             <h2 class="stitle">Browse by <span>Category</span></h2>
             <div class="sline"></div>
             <p class="sdesc mx-auto" style="max-width:480px;">From sizzling burgers to exotic world cuisines - find your favourite in our menu</p>
