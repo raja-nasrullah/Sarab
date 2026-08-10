@@ -3,7 +3,7 @@
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\ChatController;
 use App\Http\Controllers\admin\DashboardController;
-use App\Http\Controllers\website\ContactController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\OrderController;
