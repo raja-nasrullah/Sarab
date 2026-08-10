@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 | AUTHENTICATION ROUTES
 |--------------------------------------------------------------------------
 */
-Route::get('/admin', [AuthController::class, 'showAdminLogin'])->name('admin.login');
-Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.login.post');
+// Route::get('/admin', [AuthController::class, 'showAdminLogin'])->name('admin.login');
+// Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.login.post');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -63,6 +63,8 @@ Route::post('/place-order', [OrderController::class, 'placeOrderFromWeb'])->name
 */
 
 Route::domain('admin.sarab.site')->group(function () {
+    Route::get('/', [AuthController::class, 'showAdminLogin'])->name('admin.login');
+    Route::post('/login', [AuthController::class, 'adminLogin'])->name('admin.login.post');
 Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
 
     // --- Dashboard ---
