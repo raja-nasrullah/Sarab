@@ -61,6 +61,8 @@ Route::post('/place-order', [OrderController::class, 'placeOrderFromWeb'])->name
 | ADMIN ROUTES (Protected by Admin Middleware)
 |--------------------------------------------------------------------------
 */
+
+Route::domain('admin.sarab.site')->group(function () {
 Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
 
     // --- Dashboard ---
@@ -129,6 +131,8 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function ()
     Route::get('/settings', function () { return view('admin.pages.settings'); })->name('settings');
     Route::get('/faq', function () { return view('admin.pages.faq'); })->name('faq');
     Route::get('/lock/screen', function () { return view('admin.pages.lock_screen'); })->name('lock.screen');
+
+});
 
 });
 
