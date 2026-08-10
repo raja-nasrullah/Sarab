@@ -15,44 +15,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PurchaseController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| AUTHENTICATION ROUTES (Main Domain - sarab.site)
-|--------------------------------------------------------------------------
-*/
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-/*
-|--------------------------------------------------------------------------
-| PUBLIC WEBSITE ROUTES (Main Domain - sarab.site)
-|--------------------------------------------------------------------------
-*/
-Route::get('/', function () { return view('website.pages.index'); })->name('home');
-
-Route::get('/menu', [MenuItemController::class, 'websiteIndex'])->name('menu');
-Route::get('/reservation', [ReservationController::class, 'websiteIndex'])->name('reservation');
-Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
-
-Route::get('/contact', function () { return view('website.pages.contact'); })->name('contact');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-
-Route::get('/send-email', [MailController::class, 'sendEmail'])->name('send.email');
-
-/*
-|--------------------------------------------------------------------------
-| CART & CHECKOUT ROUTES (Session-Based)
-|--------------------------------------------------------------------------
-*/
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
-Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
-
-Route::get('/order-confirmation/{id}', [App\Http\Controllers\OrderController::class, 'showOrderConfirmation'])->name('order.confirmation');
-
-Route::post('/place-order', [OrderController::class, 'placeOrderFromWeb'])->name('place-order');
 
 /*
 |--------------------------------------------------------------------------
@@ -135,6 +97,47 @@ Route::domain('admin.sarab.site')->group(function () {
         Route::get('/lock/screen', function () { return view('admin.pages.lock_screen'); })->name('admin.lock.screen');
     });
 });
+
+/*
+|--------------------------------------------------------------------------
+| AUTHENTICATION ROUTES (Main Domain - sarab.site)
+|--------------------------------------------------------------------------
+*/
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+/*
+|--------------------------------------------------------------------------
+| PUBLIC WEBSITE ROUTES (Main Domain - sarab.site)
+|--------------------------------------------------------------------------
+*/
+Route::get('/', function () { return view('website.pages.index'); })->name('home');
+
+Route::get('/menu', [MenuItemController::class, 'websiteIndex'])->name('menu');
+Route::get('/reservation', [ReservationController::class, 'websiteIndex'])->name('reservation');
+Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
+
+Route::get('/contact', function () { return view('website.pages.contact'); })->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+Route::get('/send-email', [MailController::class, 'sendEmail'])->name('send.email');
+
+/*
+|--------------------------------------------------------------------------
+| CART & CHECKOUT ROUTES (Session-Based)
+|--------------------------------------------------------------------------
+*/
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
+Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
+
+Route::get('/order-confirmation/{id}', [App\Http\Controllers\OrderController::class, 'showOrderConfirmation'])->name('order.confirmation');
+
+Route::post('/place-order', [OrderController::class, 'placeOrderFromWeb'])->name('place-order');
+
+
 
 /*
 |--------------------------------------------------------------------------
