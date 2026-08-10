@@ -149,3 +149,14 @@ Route::get('/lock-screen', function () { return view('admin.pages.lock_screen');
 Route::get('/register', function () { return redirect('/login'); })->name('register');
 Route::get('/password/reset', function () { return redirect('/login'); })->name('password.request');
 Route::get('/password/reset/{token}', function () { return redirect('/login'); })->name('password.reset');
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN SUBDOMAIN ROUTES
+|--------------------------------------------------------------------------
+*/
+Route::domain('admin.sarab.site')->group(function () {
+    Route::redirect('/', '/admin');
+    Route::get('/admin', [AuthController::class, 'showAdminLogin'])->name('admin.login.subdomain');
+    Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.login.post.subdomain');
+});
