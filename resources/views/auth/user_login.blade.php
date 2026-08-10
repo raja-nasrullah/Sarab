@@ -85,12 +85,6 @@
             <div class="auth-footer">
                 Don't have an account? <a href="{{ route('register') }}">Create one</a>
             </div>
-
-            <div style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:6px;font-size:12px;color:#6c757d;">
-                <strong>Demo Credentials:</strong><br>
-                Email: admin@example.com<br>
-                Password: password123
-            </div>
         </div>
     </div>
 @endsection

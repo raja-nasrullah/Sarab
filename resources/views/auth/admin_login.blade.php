@@ -87,13 +87,6 @@
                     ← Login as Regular User
                 </a>
             </div>
-
-            {{-- Show demo credentials --}}
-            <!-- <div style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:6px;font-size:12px;color:#6c757d;border:1px solid #e5e7eb;">
-                <strong>Admin Demo Credentials:</strong><br>
-                Email: admin@example.com<br>
-                Password: password123
-            </div> -->
         </div>
     </div>
 @endsection
