@@ -118,7 +118,7 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         
         if ($role === 'Administrator') {
-            return redirect('/admin')->with('success', 'Logged out successfully.');
+            return redirect()->route('admin.login')->with('success', 'Logged out successfully.');
         }
         
         return redirect('/')->with('success', 'Logged out successfully.');
