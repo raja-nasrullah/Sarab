@@ -16,7 +16,7 @@ class AdminMiddleware
             if ($request->wantsJson()) {
                 return response()->json(['error' => 'Unauthenticated. Please refresh and login again.'], 401);
             }
-            return redirect('/login');
+            return redirect()->route('admin.login');
         }
 
         // 2. Check if the user is an Administrator
