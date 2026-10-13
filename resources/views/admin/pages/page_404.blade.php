@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Page not found | Gentelella 2026 v4')
+@section('title', 'Page not found | Sarab 2026 v4')
 @section('page', 'error.404')
 
 {{-- Override sidebar for error page --}}

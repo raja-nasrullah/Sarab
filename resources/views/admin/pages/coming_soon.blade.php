@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Coming soon | Gentelella 2026 v4')
+@section('title', 'Coming soon | Sarab 2026 v4')
 @section('page', 'coming-soon')
 
 {{-- Override the layout to remove sidebar for this page --}}
@@ -19,7 +19,7 @@
             <div class="error-title">Coming soon</div>
             <div class="error-message">
                 Something exciting is on the way. We're putting the finishing touches on a brand-new
-                Gentelella v4 — sign up below and we'll let you know the moment it's ready.
+                Sarab v4 — sign up below and we'll let you know the moment it's ready.
             </div>
 
             <div class="countdown" id="countdown">

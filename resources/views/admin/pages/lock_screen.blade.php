@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Locked | Gentelella 2026 v4')
+@section('title', 'Locked | Sarab 2026 v4')
 @section('page', 'lock-screen')
 
 {{-- Override sidebar for auth page --}}

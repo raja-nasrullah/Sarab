@@ -1,129 +1,170 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Order #7841 | Gentelella 2026 v4')
+@section('title', 'Order #' . $order->id . ' | Sarab 2026 v4')
 @section('page', 'order-detail')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>
     <span class="breadcrumb-item">Shop</span>
     <span class="breadcrumb-separator">/</span>
-    <span class="breadcrumb-item">Orders</span>
+    <a href="{{ route('admin.orders') }}" class="breadcrumb-item">Orders</a>
     <span class="breadcrumb-separator">/</span>
-    <span class="breadcrumb-item active">#7841</span>
+    <span class="breadcrumb-item active">#{{ $order->id }}</span>
 @endsection
 
 @section('content')
     <div class="page-header">
         <div class="page-header-row">
             <div>
-                <div class="page-pretitle">Shop · <a href="{{ route('orders') }}" style="color:var(--primary)">Orders</a></div>
-                <h1 class="page-title">Order #7841 <span class="status status-green" style="vertical-align:middle;margin-left:8px">Paid</span></h1>
+                <div class="page-pretitle">Shop ·
+                    <a href="{{ route('admin.orders') }}" style="color:var(--primary)">Orders</a>
+                </div>
+                <h1 class="page-title">
+                    Order #{{ $order->id }}
+                    <span class="status status-{{ $order->status == 'completed' ? 'green' : ($order->status == 'cancelled' ? 'red' : 'yellow') }}"
+                          style="vertical-align:middle;margin-left:8px">
+                        {{ ucfirst($order->status) }}
+                    </span>
+                </h1>
             </div>
             <div class="page-actions">
-                <button class="btn btn-outline">Print</button>
-                <button class="btn btn-outline">Send invoice</button>
-                <button class="btn btn-primary">Mark fulfilled</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Timeline -->
-    <div class="card" style="margin-bottom:16px">
-        <div class="card-body" style="padding:16px 20px">
-            <div class="order-timeline">
-                <div class="step done"><div class="dot"></div><div><div class="label">Placed</div><div class="meta">Apr 28 · 10:14</div></div></div>
-                <div class="step done"><div class="dot"></div><div><div class="label">Paid</div><div class="meta">Apr 28 · 10:14</div></div></div>
-                <div class="step active"><div class="dot"></div><div><div class="label">Preparing</div><div class="meta">In progress</div></div></div>
-                <div class="step"><div class="dot"></div><div><div class="label">Shipped</div><div class="meta">Pending</div></div></div>
-                <div class="step"><div class="dot"></div><div><div class="label">Delivered</div><div class="meta">Pending</div></div></div>
+                <button class="btn btn-outline" onclick="window.print()">Print</button>
+                @if($order->status === 'completed' && $order->invoice)
+                    <a href="{{ route('admin.invoice', $order->invoice->id) }}" class="btn btn-primary">View Invoice</a>
+                @endif
             </div>
         </div>
     </div>
 
     <div class="row col-8-4">
-        <!-- Items -->
+        <!-- LEFT -->
         <div style="display:flex;flex-direction:column;gap:16px">
+
+            {{-- ITEMS --}}
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">Items · 3</div>
+                    <div class="card-title">Items · {{ $order->orderItems->count() }}</div>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
-                                <tr><th>Product</th><th style="width:60px">Qty</th><th style="width:100px">Price</th><th style="width:100px">Total</th></tr>
+                                <tr>
+                                    <th>Product</th>
+                                    <th style="width:60px">Qty</th>
+                                    <th style="width:100px">Price</th>
+                                    <th style="width:100px">Total</th>
+                                </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><div class="cell-customer"><div class="cell-avatar" style="background:var(--primary-lt);color:var(--primary)">AP</div><div><div class="cell-strong">AdminLTE Pro</div><div style="font-size:11.5px;color:var(--text-muted)">SKU · ALP-2026</div></div></div></td>
-                                    <td>1</td><td>$129.00</td><td class="cell-strong">$129.00</td>
-                                </tr>
-                                <tr>
-                                    <td><div class="cell-customer"><div class="cell-avatar" style="background:var(--azure-lt);color:var(--azure)">GT</div><div><div class="cell-strong">Gentelella Theme</div><div style="font-size:11.5px;color:var(--text-muted)">SKU · GT-2026</div></div></div></td>
-                                    <td>1</td><td>$89.00</td><td class="cell-strong">$89.00</td>
-                                </tr>
-                                <tr>
-                                    <td><div class="cell-customer"><div class="cell-avatar" style="background:var(--purple-lt);color:var(--purple)">DP</div><div><div class="cell-strong">Dashboard Pack</div><div style="font-size:11.5px;color:var(--text-muted)">SKU · DP-2026</div></div></div></td>
-                                    <td>1</td><td>$27.00</td><td class="cell-strong">$27.00</td>
-                                </tr>
+                                @foreach($order->orderItems as $item)
+                                    <tr>
+                                        <td>
+                                            <div class="cell-customer">
+                                                <div class="cell-avatar" style="background:var(--primary-lt);color:var(--primary)">
+                                                    {{ strtoupper(substr($item->menuItem->name ?? 'IT', 0, 2)) }}
+                                                </div>
+                                                <div>
+                                                    <div class="cell-strong">{{ $item->menuItem->name ?? 'Item' }}</div>
+                                                    <div style="font-size:11.5px;color:var(--text-muted)">Menu item #{{ $item->menu_item_id }}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{{ $item->quantity }}</td>
+                                        <td>${{ number_format($item->price, 2) }}</td>
+                                        <td class="cell-strong">${{ number_format($item->price * $item->quantity, 2) }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
+
+                {{-- TOTALS --}}
                 <div style="padding:14px 20px;border-top:1px solid var(--border-color-light);display:flex;justify-content:flex-end">
                     <table style="font-size:13px">
-                        <tr><td style="padding:2px 16px 2px 0;color:var(--text-secondary)">Subtotal</td><td style="text-align:right;min-width:90px">$245.00</td></tr>
-                        <tr><td style="padding:2px 16px 2px 0;color:var(--text-secondary)">Shipping</td><td style="text-align:right">$0.00</td></tr>
-                        <tr><td style="padding:2px 16px 2px 0;color:var(--text-secondary)">Tax</td><td style="text-align:right">$0.00</td></tr>
-                        <tr><td style="padding:6px 16px 2px 0;color:var(--text);font-weight:var(--font-weight-bold);border-top:1px solid var(--border-color-light)">Total</td><td style="text-align:right;font-weight:var(--font-weight-bold);font-size:15px;border-top:1px solid var(--border-color-light);padding-top:6px">$245.00</td></tr>
+                        <tr>
+                            <td style="padding:2px 16px 2px 0;color:var(--text-secondary)">Subtotal</td>
+                            <td style="text-align:right;min-width:90px">${{ number_format($order->total_amount, 2) }}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:2px 16px 2px 0;color:var(--text-secondary)">Shipping</td>
+                            <td style="text-align:right">$0.00</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:6px 16px 2px 0;color:var(--text);font-weight:var(--font-weight-bold);border-top:1px solid var(--border-color-light)">Total</td>
+                            <td style="text-align:right;font-weight:var(--font-weight-bold);font-size:15px;border-top:1px solid var(--border-color-light);padding-top:6px">
+                                ${{ number_format($order->total_amount, 2) }}
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>
 
+            {{-- NOTES (static example, keep as-is or wire up later) --}}
             <div class="card">
                 <div class="card-header"><div class="card-title">Order notes</div></div>
                 <div class="card-body" style="padding:8px 16px">
-                    <div class="activity-list">
-                        <div class="activity-item"><div class="activity-avatar" style="background:linear-gradient(135deg,var(--primary),var(--primary-dk))">JD</div><div><div class="activity-body">Customer requested expedited shipping if available.</div><div class="activity-time">Apr 28 · 10:15</div></div></div>
-                        <div class="activity-item"><div class="activity-avatar" style="background:linear-gradient(135deg,var(--azure),#1d6fa5)">A</div><div><div class="activity-body"><strong>Aigars S.</strong> noted the customer is a returning user with 5+ orders.</div><div class="activity-time">Apr 28 · 10:32</div></div></div>
-                    </div>
-                    <textarea class="form-control" rows="2" placeholder="Add a note for your team…" aria-label="Order note" style="margin-top:10px"></textarea>
+                    <textarea class="form-control" rows="2" placeholder="Add a note for your team…" aria-label="Order note"></textarea>
                 </div>
             </div>
         </div>
 
-        <!-- Sidebar -->
+        <!-- RIGHT (SIDEBAR) -->
         <div style="display:flex;flex-direction:column;gap:16px">
+
+            {{-- CUSTOMER --}}
             <div class="card">
                 <div class="card-header"><div class="card-title">Customer</div></div>
                 <div class="card-body" style="padding:14px 16px">
                     <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
-                        <div class="cell-avatar" style="background:linear-gradient(135deg,var(--primary),var(--primary-dk));width:40px;height:40px;font-size:13px">JD</div>
+                        <div class="cell-avatar" style="background:linear-gradient(135deg,var(--primary),var(--primary-dk));width:40px;height:40px;font-size:13px">
+                            {{ strtoupper(substr($order->customer->name ?? 'G', 0, 2)) }}
+                        </div>
                         <div>
-                            <div class="cell-strong">John Doe</div>
-                            <div style="font-size:11.5px;color:var(--text-muted)">5 previous orders</div>
+                            <div class="cell-strong">{{ $order->customer->name ?? 'Guest' }}</div>
+                            <div style="font-size:11.5px;color:var(--text-muted)">
+                                {{ $order->customer->email ?? '-' }}
+                            </div>
                         </div>
                     </div>
-                    <div class="order-info-row"><span class="label">Email</span><a href="mailto:john@example.com" style="color:var(--primary);font-size:12.5px">john@example.com</a></div>
-                    <div class="order-info-row"><span class="label">Phone</span><span class="value">+1 (555) 010-2026</span></div>
+                    <div class="order-info-row">
+                        <span class="label">Email</span>
+                        <a href="mailto:{{ $order->customer->email ?? '' }}" style="color:var(--primary);font-size:12.5px">
+                            {{ $order->customer->email ?? '-' }}
+                        </a>
+                    </div>
+                    <div class="order-info-row">
+                        <span class="label">Phone</span>
+                        <span class="value">{{ $order->phone ?? $order->customer->phone ?? '-' }}</span>
+                    </div>
                 </div>
             </div>
 
+            {{-- SHIPPING ADDRESS (dynamic) --}}
             <div class="card">
-                <div class="card-header"><div class="card-title">Shipping address</div></div>
+                <div class="card-header"><div class="card-title">Delivery address</div></div>
                 <div class="card-body" style="padding:14px 16px;font-size:12.5px;color:var(--text-secondary);line-height:1.6">
-                    <strong style="color:var(--text)">John Doe</strong><br>
-                    1234 Market Street, Suite 500<br>
-                    San Francisco, CA 94103<br>
-                    United States
+                    <strong style="color:var(--text)">{{ $order->customer->name ?? 'Guest' }}</strong><br>
+                    {{ $order->address ?? 'No address provided' }}
                 </div>
             </div>
 
+            {{-- PAYMENT (dynamic) --}}
             <div class="card">
                 <div class="card-header"><div class="card-title">Payment</div></div>
                 <div class="card-body" style="padding:14px 16px">
-                    <div class="order-info-row"><span class="label">Method</span><span class="value">Visa •••• 4242</span></div>
-                    <div class="order-info-row"><span class="label">Transaction</span><span class="value cell-mono">ch_3OqXyZ</span></div>
-                    <div class="order-info-row"><span class="label">Status</span><span class="status status-green">Captured</span></div>
+                    <div class="order-info-row">
+                        <span class="label">Method</span>
+                        <span class="value">
+                            {{ ucfirst(str_replace('_', ' ', $order->payment_method ?? 'N/A')) }}
+                        </span>
+                    </div>
+                    <div class="order-info-row">
+                        <span class="label">Status</span>
+                        <span class="status status-{{ $order->status == 'completed' ? 'green' : ($order->status == 'cancelled' ? 'red' : 'yellow') }}">
+                            {{ ucfirst($order->status) }}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

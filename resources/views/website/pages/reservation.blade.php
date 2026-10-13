@@ -9,6 +9,22 @@
 <link rel="stylesheet" href="{{ asset('assets/website/css/swiper-bundle.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/website/css/style.css') }}">
 
+<style>
+    /* Reservation form wrapper — decoupled from hero .fcard rules */
+    .res-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 32px;
+        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+        position: relative;   /* normal flow — never absolute */
+    }
+
+    /* Optional: tighten up the spacing on smaller screens */
+    @media (max-width: 767px) {
+        .res-card { padding: 22px 18px; }
+    }
+</style>
+
 <section id="reservation">
    <div class="container">
       <div class="text-center mb-5" data-aos="fade-up">
@@ -43,7 +59,7 @@
             </div>
          </div>
          <div class="col-lg-8" data-aos="fade-left">
-            <div class="fcard">
+            <div class="res-card">
                 <form action="{{ route('reservation.store') }}" method="POST">
                     @csrf
 
@@ -154,7 +170,7 @@
       </div>
    </div>
 </section>
-<br>
+
 <!-- BLOG -->
 <section id="blog">
    <div class="container">
@@ -210,13 +226,12 @@
    </div>
 </section>
 
-
-   <!-- Scripts from public/assets/website/js/ -->
-   <script src="{{ asset('assets/website/js/jquery-3.7.1.min.js') }}"></script>
-   <script src="{{ asset('assets/website/js/bootstrap.bundle.min.js') }}"></script>
-   <script src="{{ asset('assets/website/js/aos.js') }}"></script>
-   <script src="{{ asset('assets/website/js/swiper-bundle.min.js') }}"></script>
-   <script src="{{ asset('assets/website/js/jquery.magnific-popup.min.js') }}"></script>
-   <script src="{{ asset('assets/website/js/main.js') }}"></script>
+<!-- Scripts -->
+<script src="{{ asset('assets/website/js/jquery-3.7.1.min.js') }}"></script>
+<script src="{{ asset('assets/website/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/website/js/aos.js') }}"></script>
+<script src="{{ asset('assets/website/js/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('assets/website/js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ asset('assets/website/js/main.js') }}"></script>
 
 @endsection

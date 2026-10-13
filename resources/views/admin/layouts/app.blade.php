@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Gentelella 2026 v4')</title>
+    <title>@yield('title', 'Sarab 2026 v4')</title>
     
     {{-- Favicon --}}
     <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/svg+xml">
@@ -18,6 +18,7 @@
     
     {{-- Vite Assets - SCSS and JS --}}
     @vite(['public/assets/admin/scss/main.scss', 'public/assets/admin/js/app.js'])
+    @vite(['resources/js/app.js']) 
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     

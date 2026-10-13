@@ -57,6 +57,7 @@
                      <button class="madd" title="Quick View" onclick="openQuickView({{ $item->id }})">
                         <i class="fas fa-eye"></i>
                      </button>
+
                   </div>
                </div>
             </div>
@@ -64,7 +65,7 @@
          @endforeach
 
       </div>
-      <div class="text-center mt-5"><a href="#" class="btn-red"><i class="fas fa-th-large"></i>View Full Menu</a></div>
+      <!-- <div class="text-center mt-5"><a href="#" class="btn-red"><i class="fas fa-th-large"></i>View Full Menu</a></div> -->
    </div>
 </section>
 
@@ -157,6 +158,9 @@
 <script src="{{ asset('assets/website/js/jquery.magnific-popup.min.js') }}"></script>
 <script src="{{ asset('assets/website/js/main.js') }}"></script>
 
+<!-- ✅ SWEETALERT CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
 <script>
     $(document).ready(function() {
         // Menu Filter Functionality
@@ -192,14 +196,22 @@
         document.getElementById('qvQty').textContent = qty;
     }
 
+    // ✅ FIXED: Better error handling for openQuickView
     function openQuickView(id) {
         // Reset UI for new item
         qty = 1;
         document.getElementById('qvQty').textContent = 1;
 
         fetch(`/api/menu-items/${id}`)
-            .then(res => res.json())
+            .then(res => {
+                console.log('Response status:', res.status);
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            })
             .then(item => {
+                console.log('Item received:', item);
                 currentItem = item; // Save the item data globally
                 
                 document.getElementById('qvCategory').textContent = item.category ? item.category.name : 'Uncategorized';
@@ -225,11 +237,17 @@
                 const modal = new bootstrap.Modal(document.getElementById('quickViewModal'));
                 modal.show();
             })
-            .catch(err => alert('Error loading item details'));
+            .catch(err => {
+                console.error('Fetch error:', err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error loading item details: ' + err.message
+                });
+            });
     }
 
-    // ✅ NEW SESSION-BASED ADD TO CART
-        // ✅ NEW SESSION-BASED ADD TO CART WITH SWEETALERT
+    // ✅ FIXED: addToCart with proper Swal checks
     function addToCart() {
         if (!currentItem) {
             Swal.fire({
@@ -254,8 +272,8 @@
         })
         .then(res => res.json())
         .then(data => {
+            console.log('Cart response:', data);
             if (data.success) {
-                // ✅ REPLACED UGLY ALERT WITH BEAUTIFUL SWEETALERT
                 Swal.fire({
                     icon: 'success',
                     title: 'Added to Cart!',
@@ -267,13 +285,10 @@
                 // Close the modal automatically
                 const modalEl = document.getElementById('quickViewModal');
                 const modal = bootstrap.Modal.getInstance(modalEl);
-                modal.hide();
-
-                // Optional: Update a navbar cart count badge if you add one later
-                // const badge = document.getElementById('cart-count-badge');
-                // if (badge) badge.textContent = data.cart_count;
+                if (modal) {
+                    modal.hide();
+                }
             } else {
-                // ✅ REPLACED UGLY ALERT WITH BEAUTIFUL SWEETALERT
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -282,8 +297,7 @@
             }
         })
         .catch(err => {
-            console.error(err);
-            // ✅ REPLACED UGLY ALERT WITH BEAUTIFUL SWEETALERT
+            console.error('Add to cart error:', err);
             Swal.fire({
                 icon: 'error',
                 title: 'Network Error',

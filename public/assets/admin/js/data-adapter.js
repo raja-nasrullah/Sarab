@@ -1,4 +1,4 @@
-// Gentelella v4 — data-adapter pattern
+// Sarab v4 — data-adapter pattern
 //
 // Every interactive page in the template has hardcoded seed data. Replacing
 // that with a real API call is the most common first task for someone using
@@ -17,16 +17,16 @@
 //
 // The flag can be flipped via `?api=1` URL param (handy for live demos that
 // switch between "static preview" and "real backend") OR by setting
-// `window.__GENTELELLA_API__ = true` before module load.
+// `window.__Sarab_API__ = true` before module load.
 
 /**
  * Returns true when the page is in API mode. Two ways to opt in:
  *   ?api=1 in the URL (one-shot demo trigger)
- *   window.__GENTELELLA_API__ = true (set in a build script for prod)
+ *   window.__Sarab_API__ = true (set in a build script for prod)
  */
 export function useApiMode() {
   if (typeof window === 'undefined') {return false;}
-  if (window.__GENTELELLA_API__) {return true;}
+  if (window.__Sarab_API__) {return true;}
   return new URLSearchParams(window.location.search).has('api');
 }
 

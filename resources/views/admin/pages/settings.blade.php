@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Settings | Gentelella 2026 v4')
+@section('title', 'Settings | Sarab 2026 v4')
 @section('page', 'settings')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>
@@ -218,7 +218,7 @@
                 <!-- INTEGRATIONS -->
                 <section class="settings-section" id="integrations">
                     <h2 class="settings-section-title">Integrations</h2>
-                    <p class="settings-section-desc">Connect Gentelella with the tools you already use.</p>
+                    <p class="settings-section-desc">Connect Sarab with the tools you already use.</p>
                     <div class="integrations-grid">
                         <!-- Integration items -->
                     </div>
@@ -440,7 +440,7 @@
                 
                 // Simulate data export - in real app, this would fetch from API
                 const exportData = {
-                    workspace: 'Gentelella',
+                    workspace: 'Sarab',
                     exported_at: new Date().toISOString(),
                     users: [
                         { id: 1, name: 'Aigars Silkalns', email: 'aigars@example.com', role: 'Owner' },

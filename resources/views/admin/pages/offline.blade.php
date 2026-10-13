@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Offline | Gentelella 2026 v4')
+@section('title', 'Offline | Sarab 2026 v4')
 @section('page', 'offline')
 
 {{-- Override sidebar for offline page --}}

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Gentelella 2026 — Free admin template')
+@section('title', 'Sarab 2026 — Free admin template')
 @section('page', 'landing')
 
 {{-- Override sidebar for landing page --}}
@@ -12,7 +12,7 @@
 <header class="landing-nav">
   <div class="brand">
     <div class="brand-icon">G</div>
-    <div class="brand-name">Gentelella <small style="font-weight:400;color:var(--text-muted);font-size:13px;margin-left:2px">v4</small></div>
+    <div class="brand-name">Sarab <small style="font-weight:400;color:var(--text-muted);font-size:13px;margin-left:2px">v4</small></div>
   </div>
   <nav>
     <a href="#features">Features</a>
@@ -20,7 +20,7 @@
     <a href="#testimonials">Reviews</a>
     <a href="pricing_tables.html">Pricing</a>
     <a href="#faq">FAQ</a>
-    <a href="https://github.com/ColorlibHQ/gentelella" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://github.com/ColorlibHQ/Sarab" target="_blank" rel="noopener">GitHub</a>
   </nav>
   <div class="cta">
     <a href="login.html" class="btn btn-outline">Sign in</a>
@@ -37,7 +37,7 @@
   <p class="subhead">Fresh design system. Real ECharts. Real DataTables. Vite 8, vanilla JS, zero jQuery. Built by Colorlib.</p>
   <div class="cta">
     <a href="index.html" class="btn btn-primary" style="height:42px;padding:0 18px;font-size:14px">View live demo →</a>
-    <a href="https://github.com/ColorlibHQ/gentelella" target="_blank" rel="noopener" class="btn btn-outline" style="height:42px;padding:0 18px;font-size:14px">⭐ Star on GitHub</a>
+    <a href="https://github.com/ColorlibHQ/Sarab" target="_blank" rel="noopener" class="btn btn-outline" style="height:42px;padding:0 18px;font-size:14px">⭐ Star on GitHub</a>
   </div>
   <div style="margin-top:32px;display:flex;justify-content:center;gap:24px;flex-wrap:wrap;font-size:12px;color:var(--text-muted)">
     <span>✓ MIT licensed</span>
@@ -210,7 +210,7 @@
     <div style="text-align:center;margin-bottom:48px">
       <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.6px;color:var(--primary);margin-bottom:8px">From the community</div>
       <h2 style="font-size:36px;font-weight:700;letter-spacing:-1px;color:var(--text);margin-bottom:12px">Used by 22,000+ developers</h2>
-      <p style="font-size:15px;color:var(--text-secondary)">Since 2014, Gentelella has been one of the most-used free admin templates on GitHub.</p>
+      <p style="font-size:15px;color:var(--text-secondary)">Since 2014, Sarab has been one of the most-used free admin templates on GitHub.</p>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px">
       <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:24px">
@@ -263,7 +263,7 @@
     </details>
     <details style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius);padding:18px 20px">
       <summary style="font-size:14px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Do I need a backend? <span style="color:var(--text-muted)">+</span></summary>
-      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-color-light)">No. Gentelella v4 is a pure frontend template — static HTML/CSS/JS. Wire it up to whatever stack you like (Rails, Django, Express, Laravel, Supabase, anything).</div>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-color-light)">No. Sarab v4 is a pure frontend template — static HTML/CSS/JS. Wire it up to whatever stack you like (Rails, Django, Express, Laravel, Supabase, anything).</div>
     </details>
     <details style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius);padding:18px 20px">
       <summary style="font-size:14px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Can I use it with React/Vue/Svelte? <span style="color:var(--text-muted)">+</span></summary>
@@ -275,11 +275,11 @@
     </details>
     <details style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius);padding:18px 20px">
       <summary style="font-size:14px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">What changed in v4? <span style="color:var(--text-muted)">+</span></summary>
-      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-color-light)">Bootstrap and jQuery are gone. The design system is custom SCSS. ECharts replaced Chart.js. DataTables replaced jQuery DataTables. node_modules dropped from ~600 MB to 138 MB. See the <a href="https://github.com/ColorlibHQ/gentelella/blob/master/CHANGELOG.md">changelog</a> for the full diff.</div>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-color-light)">Bootstrap and jQuery are gone. The design system is custom SCSS. ECharts replaced Chart.js. DataTables replaced jQuery DataTables. node_modules dropped from ~600 MB to 138 MB. See the <a href="https://github.com/ColorlibHQ/Sarab/blob/master/CHANGELOG.md">changelog</a> for the full diff.</div>
     </details>
     <details style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius);padding:18px 20px">
       <summary style="font-size:14px;font-weight:600;color:var(--text);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Where can I get help? <span style="color:var(--text-muted)">+</span></summary>
-      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-color-light)">Open an issue on <a href="https://github.com/ColorlibHQ/gentelella/issues">GitHub</a> or read the <a href="faq.html">help center</a>. The repo also has a CONTRIBUTING.md if you want to send a PR.</div>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-color-light)">Open an issue on <a href="https://github.com/ColorlibHQ/Sarab/issues">GitHub</a> or read the <a href="faq.html">help center</a>. The repo also has a CONTRIBUTING.md if you want to send a PR.</div>
     </details>
   </div>
 </section>
@@ -292,7 +292,7 @@
 </section>
 
 <footer class="landing-footer">
-  <span>Gentelella v4 · made by <a href="https://colorlib.com" style="color:var(--primary)">Colorlib</a> · MIT</span>
+  <span>Sarab v4 · made by <a href="https://colorlib.com" style="color:var(--primary)">Colorlib</a> · MIT</span>
   <span>© 2026</span>
 </footer>
 @endsection

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'User Management | Gentelella 2026 v4')
+@section('title', 'User Management | Sarab 2026 v4')
 @section('page', 'user-management')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>
@@ -17,19 +17,17 @@
         <div class="page-pretitle">Admin</div>
         <h1 class="page-title">User management</h1>
       </div>
-      <div class="page-actions">
-        <button class="btn btn-outline">Export</button>
-        <button class="btn btn-primary" id="invite-btn">+ Invite user</button>
-      </div>
     </div>
   </div>
 
+  {{-- STATS ROW --}}
   <div class="row col-3" style="margin-bottom:16px">
     <div class="card"><div class="stat"><div class="stat-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg></div><div class="stat-content"><div class="stat-label">Total users</div><div class="stat-value-row"><span class="stat-value">12</span></div><div class="stat-subtext">3 active right now</div></div></div></div>
     <div class="card"><div class="stat"><div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1l3 6 6 .9-4.5 4.4 1 6.7L12 16l-5.5 3 1-6.7L3 7.9 9 7z"/></svg></div><div class="stat-content"><div class="stat-label">Admins</div><div class="stat-value-row"><span class="stat-value">2</span></div><div class="stat-subtext">Owner + 1 admin</div></div></div></div>
     <div class="card"><div class="stat"><div class="stat-icon yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><div class="stat-content"><div class="stat-label">Pending invites</div><div class="stat-value-row"><span class="stat-value">2</span></div><div class="stat-subtext">Awaiting acceptance</div></div></div></div>
   </div>
 
+  {{-- USERS TABLE --}}
   <div class="card">
     <div class="card-header" style="gap:12px;flex-wrap:wrap">
       <div class="users-filters">
@@ -41,8 +39,7 @@
           <option value="">All roles</option>
           <option value="Owner">Owner</option>
           <option value="Admin">Admin</option>
-          <option value="Editor">Editor</option>
-          <option value="Viewer">Viewer</option>
+          <option value="User">User</option>
         </select>
         <select class="form-control" id="filter-status" style="width:140px;height:32px" aria-label="Filter by status">
           <option value="">All statuses</option>
@@ -72,31 +69,23 @@
     </div>
   </div>
 
-</div>
-
 <script type="module">
 import { showToast } from '/src/v4/toast.js';
-import { showModal } from '/src/v4/modal.js';
 import { openMenu } from '/src/v4/menus.js';
 
+/* ==========================================================
+   PLACEHOLDER — replace this with data from your controller
+   ========================================================== */
 const USERS = [
-  { name:'Aigars Silkalns',  email:'aigars@example.com',  ini:'A',  col:'primary', role:'Owner',  status:'active',    lastActive:'just now',     joined:'Mar 2024' },
-  { name:'Sarah Kowalski',   email:'sarah@example.com',   ini:'SK', col:'azure',   role:'Admin',  status:'active',    lastActive:'2 min ago',    joined:'Apr 2024' },
-  { name:'Michael Reyes',    email:'michael@example.com', ini:'MR', col:'purple',  role:'Editor', status:'active',    lastActive:'14 min ago',   joined:'May 2024' },
-  { name:'Emily Wang',       email:'emily@example.com',   ini:'EW', col:'yellow',  role:'Editor', status:'active',    lastActive:'1 hour ago',   joined:'Jun 2024' },
-  { name:'Mark Kim',         email:'mark@example.com',    ini:'MK', col:'red',     role:'Viewer', status:'active',    lastActive:'3 hours ago',  joined:'Jul 2024' },
-  { name:'Lina Park',        email:'lina@example.com',    ini:'LP', col:'green',   role:'Editor', status:'active',    lastActive:'Yesterday',    joined:'Sep 2024' },
-  { name:'Diego Reyes',      email:'diego@example.com',   ini:'DR', col:'blue',    role:'Editor', status:'active',    lastActive:'2 days ago',   joined:'Sep 2024' },
-  { name:'Yuki Tanaka',      email:'yuki@example.com',    ini:'YT', col:'primary', role:'Viewer', status:'active',    lastActive:'4 days ago',   joined:'Oct 2024' },
-  { name:'Tom Hardy',        email:'tom@example.com',     ini:'TH', col:'purple',  role:'Editor', status:'active',    lastActive:'1 week ago',   joined:'Nov 2024' },
-  { name:'Robert Jones',     email:'robert@example.com',  ini:'RJ', col:'red',     role:'Viewer', status:'suspended', lastActive:'2 weeks ago',  joined:'Dec 2024' },
-  { name:'invite@acme.com',  email:'invite@acme.com',     ini:'?',  col:'gray',    role:'Editor', status:'pending',   lastActive:'—',            joined:'Apr 28, 2026', pending:true },
-  { name:'newhire@team.io',  email:'newhire@team.io',     ini:'?',  col:'gray',    role:'Viewer', status:'pending',   lastActive:'—',            joined:'Apr 27, 2026', pending:true }
+  // Example shape (delete after wiring to backend):
+  // { name:'John Doe', email:'john@example.com', ini:'JD', col:'primary', role:'Admin', status:'active', lastActive:'just now', joined:'Mar 2024' }
 ];
-const COLORS = { primary:'var(--primary)', azure:'var(--azure)', purple:'var(--purple)', yellow:'var(--yellow)', red:'var(--red)', green:'var(--green)', blue:'var(--blue)', gray:'var(--text-disabled)' };
+/* ========================================================== */
+
+const COLORS     = { primary:'var(--primary)', azure:'var(--azure)', purple:'var(--purple)', yellow:'var(--yellow)', red:'var(--red)', green:'var(--green)', blue:'var(--blue)', gray:'var(--text-disabled)' };
 const STATUS_CLS = { active:'green', pending:'yellow', suspended:'red' };
-const ROLE_CLS   = { Owner:'purple', Admin:'red', Editor:'blue', Viewer:'green' };
-const ROLES = ['Owner', 'Admin', 'Editor', 'Viewer'];
+const ROLE_CLS   = { Owner:'purple', Admin:'red', User:'green' };
+const ROLES      = ['Owner', 'Admin', 'User'];
 
 let filterText = '', filterRole = '', filterStatus = '';
 
@@ -112,7 +101,7 @@ function visible() {
 function render() {
   const rows = document.getElementById('users-rows');
   const items = visible();
-  rows.innerHTML = items.map((u, idx) => `
+  rows.innerHTML = items.map((u) => `
     <tr data-email="${u.email}">
       <td><input type="checkbox" class="row-cb" aria-label="Select row"></td>
       <td>
@@ -133,17 +122,20 @@ function render() {
   `).join('');
 }
 
-document.getElementById('users-search').addEventListener('input', (e) => { filterText = e.target.value; render(); });
-document.getElementById('filter-role').addEventListener('change', (e) => { filterRole = e.target.value; render(); });
-document.getElementById('filter-status').addEventListener('change', (e) => { filterStatus = e.target.value; render(); });
+/* ---------- Filter listeners ---------- */
+document.getElementById('users-search').addEventListener('input',  (e) => { filterText   = e.target.value; render(); });
+document.getElementById('filter-role').addEventListener('change', (e) => { filterRole   = e.target.value; render(); });
+document.getElementById('filter-status').addEventListener('change',(e) => { filterStatus = e.target.value; render(); });
 
 document.getElementById('select-all').addEventListener('change', (e) => {
   document.querySelectorAll('#users-rows .row-cb').forEach((cb) => { cb.checked = e.target.checked; });
 });
 
+/* ---------- Row actions ---------- */
 document.getElementById('users-rows').addEventListener('click', (e) => {
   const roleBtn = e.target.closest('[data-role-edit]');
   const moreBtn = e.target.closest('[data-row-menu]');
+
   if (roleBtn) {
     e.stopPropagation();
     const email = roleBtn.dataset.email;
@@ -161,14 +153,15 @@ document.getElementById('users-rows').addEventListener('click', (e) => {
         showToast(`${u.name}: role set to ${r}`, { variant: 'success' });
       }
     })));
+
   } else if (moreBtn) {
     e.stopPropagation();
     const email = moreBtn.dataset.email;
     const u = USERS.find((x) => x.email === email);
     if (!u) return;
-    const items = [
-      { label: 'View profile',     action: () => showToast(`Profile: ${u.name}`) },
-      { label: 'Reset password',   action: () => showToast(`Reset link sent to ${u.email}`, { variant: 'success' }) },
+    openMenu(moreBtn, [
+      { label: 'View profile',   action: () => showToast(`Profile: ${u.name}`) },
+      { label: 'Reset password', action: () => showToast(`Reset link sent to ${u.email}`, { variant: 'success' }) },
       { label: u.status === 'suspended' ? 'Reactivate' : 'Suspend', action: () => {
           u.status = u.status === 'suspended' ? 'active' : 'suspended';
           render();
@@ -183,50 +176,8 @@ document.getElementById('users-rows').addEventListener('click', (e) => {
           showToast(`Removed ${u.name}`);
         }
       }
-    ];
-    openMenu(moreBtn, items);
+    ]);
   }
-});
-
-document.getElementById('invite-btn').addEventListener('click', (e) => {
-  e.stopPropagation();
-  showModal({
-    title: 'Invite a user',
-    body: `
-      <form class="modal-form" novalidate>
-        <div class="modal-form-row">
-          <label for="iv-email">Email address</label>
-          <input type="email" id="iv-email" name="email" placeholder="teammate@example.com" autocomplete="off" required>
-        </div>
-        <div class="modal-form-row">
-          <label for="iv-role">Role</label>
-          <select id="iv-role" name="role">
-            <option value="Viewer">Viewer — can only view</option>
-            <option value="Editor" selected>Editor — can view and edit</option>
-            <option value="Admin">Admin — can manage users</option>
-          </select>
-        </div>
-        <div class="modal-form-row">
-          <label for="iv-message">Personal message (optional)</label>
-          <textarea id="iv-message" name="message" rows="3" placeholder="Welcome to the team!"></textarea>
-        </div>
-      </form>
-    `,
-    actions: [
-      { label: 'Cancel', variant: 'outline' },
-      { label: 'Send invite', variant: 'primary', action: ({ body }) => {
-        const form = body.querySelector('form');
-        const fd = new FormData(form);
-        const email = (fd.get('email') || '').toString().trim();
-        const role = fd.get('role').toString();
-        if (!email) { showToast('Email is required', { variant: 'warning' }); return false; }
-        USERS.push({ name: email, email, ini: '?', col: 'gray', role, status: 'pending', lastActive: '—', joined: 'just now', pending: true });
-        render();
-        showToast(`Invite sent to ${email}`, { variant: 'success' });
-        return true;
-      } }
-    ]
-  });
 });
 
 render();

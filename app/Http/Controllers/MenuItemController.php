@@ -65,14 +65,14 @@ class MenuItemController extends Controller
         return response()->json($menuItem, 201);
     }
 
-    public function show($id)
-    {
-        $menuItem = MenuItem::with('category', 'orderItems')->find($id);
-        if (!$menuItem) {
-            return response()->json(['message' => 'Menu item not found'], 404);
-        }
-        return response()->json($menuItem);
+ public function show($id)
+{
+    $menuItem = MenuItem::with('category', 'orderItems')->find($id);
+    if (!$menuItem) {
+        return response()->json(['error' => 'Item not found'], 404);
     }
+    return response()->json($menuItem);
+}
 
     public function update(Request $request, $id)
     {
@@ -163,4 +163,5 @@ class MenuItemController extends Controller
         // 3. Return the public website view
         return view('website.pages.menu', compact('categories', 'menuItems'));
     }
+    
 }

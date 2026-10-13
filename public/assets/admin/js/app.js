@@ -4,7 +4,7 @@ import '../js/charts.js'
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Gentelella 2026 v4 loaded successfully!');
+    console.log('Sarab 2026 v4 loaded successfully!');
 
     // ============================================
     // THEME TOGGLE

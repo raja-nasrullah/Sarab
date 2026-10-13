@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Under maintenance | Gentelella 2026 v4')
+@section('title', 'Under maintenance | Sarab 2026 v4')
 @section('page', 'maintenance')
 
 {{-- Override sidebar for maintenance page --}}
@@ -19,7 +19,7 @@
             </div>
             <div class="error-title">We'll be right back</div>
             <div class="error-message">
-                Gentelella is undergoing scheduled maintenance to make things faster and more reliable.
+                Sarab is undergoing scheduled maintenance to make things faster and more reliable.
                 We expect to be back online shortly. Thanks for your patience.
             </div>
             <div class="status-page-meta">

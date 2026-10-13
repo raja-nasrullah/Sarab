@@ -1,4 +1,4 @@
-// Gentelella 2026 v4 — runtime shell mount
+// Sarab 2026 v4 — runtime shell mount
 // At build/dev time the Vite plugin (vite.config.js) injects sidebar/topbar/
 // footer directly into each production/*.html. mountShell() is the runtime
 // fallback: if the shell isn't already in the DOM (e.g. opening a raw HTML
@@ -41,7 +41,7 @@ function injectShellIfMissing() {
 // others. The chosen state persists across navigation via sessionStorage so
 // the sidebar doesn't snap back to "auto-open" when the user moves to a child
 // page that's not in their preferred group.
-const SUBMENU_STATE_KEY = 'gentelella:nav-open';
+const SUBMENU_STATE_KEY = 'Sarab:nav-open';
 
 function getStoredOpenIndex() {
   try {
@@ -98,7 +98,7 @@ function bindNavSubmenus() {
 
 // Sidebar toggle — desktop collapses to a 64px rail; mobile opens a drawer.
 // Same button, viewport-aware behavior. Rail state persists in localStorage.
-const RAIL_KEY = 'gentelella:sidebar-rail';
+const RAIL_KEY = 'Sarab:sidebar-rail';
 
 function isDesktop() { return window.matchMedia('(min-width: 769px)').matches; }
 

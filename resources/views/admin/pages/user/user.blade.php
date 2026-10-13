@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'User Management | Gentelella 2026 v4')
+@section('title', 'User Management | Sarab 2026 v4')
 @section('page', 'user-management')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>
@@ -17,10 +17,10 @@
         <div class="page-pretitle">Admin</div>
         <h1 class="page-title">User management</h1>
       </div>
-      <div class="page-actions">
+      <!-- <div class="page-actions">
         <button class="btn btn-outline">Export</button>
         <button class="btn btn-primary" id="invite-btn">+ Invite user</button>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -80,6 +80,7 @@
         <select class="form-control" id="filter-role" style="width:140px;height:32px" aria-label="Filter by role">
           <option value="">All roles</option>
           <option value="Owner">Owner</option>
+          <option value="User">User</option>
           <option value="Admin">Admin</option>
           <option value="Editor">Editor</option>
           <option value="Viewer">Viewer</option>
@@ -140,7 +141,7 @@
     const COLORS = { primary:'var(--primary)', azure:'var(--azure)', purple:'var(--purple)', yellow:'var(--yellow)', red:'var(--red)', green:'var(--green)', blue:'var(--blue)', gray:'var(--text-disabled)' };
     const STATUS_CLS = { active:'green', pending:'yellow', suspended:'red' };
     const ROLE_CLS   = { Owner:'purple', Admin:'red', Editor:'blue', Viewer:'green' };
-    const ROLES = ['Owner', 'Admin', 'Editor', 'Viewer'];
+    const ROLES = ['Owner', 'User', 'Admin', 'Editor', 'Viewer'];
 
     let filterText = '', filterRole = '', filterStatus = '';
 

@@ -14,12 +14,12 @@
                 <div class="page-pretitle">Apps</div>
                 <h1 class="page-title">Chat</h1>
             </div>
-            <div class="page-actions">
+            <!-- <div class="page-actions">
                 <button class="btn btn-outline" onclick="refreshChat()">
                     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg>
                     Refresh
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 

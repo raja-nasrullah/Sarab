@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')  {{-- Changed from layouts.app --}}
 
-@section('title', 'Sign in | Gentelella 2026 v4')
+@section('title', 'Sign in | Sarab 2026 v4')
 @section('page', 'login')
 
 {{-- Override sidebar for auth page --}}

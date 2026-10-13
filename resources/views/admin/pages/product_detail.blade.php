@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Product Detail | Gentelella 2026 v4')
+@section('title', 'Product Detail | Sarab 2026 v4')
 @section('page', 'product-detail')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>
@@ -207,7 +207,7 @@
       <div class="related-grid">
         <a class="related-card" href="#">
           <div class="thumb" data-thumb="bars"></div>
-          <div class="title">Gentelella Theme</div>
+          <div class="title">Sarab Theme</div>
           <div class="meta">★★★★★ 4.8 · 1.2k</div>
           <div class="price">$89</div>
         </a>

@@ -9,7 +9,7 @@
 import { showToast } from './toast.js';
 import { showModal } from './modal.js';
 
-const STORAGE_KEY = 'gentelella:settings';
+const STORAGE_KEY = 'Sarab:settings';
 
 function load() {
   try {
@@ -249,7 +249,7 @@ function initDanger() {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'gentelella-export.json';
+        a.download = 'Sarab-export.json';
         document.body.appendChild(a);
         a.click();
         a.remove();

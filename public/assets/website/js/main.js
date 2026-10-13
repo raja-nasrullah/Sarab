@@ -29,7 +29,6 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
         var t = document.querySelector(href);
         if (t) {
             e.preventDefault();
-            // Close Bootstrap mobile navbar if open
             var navCollapse = document.getElementById('navmenu');
             if (navCollapse && navCollapse.classList.contains('show')) {
                 var bsCollapse = bootstrap.Collapse.getInstance(navCollapse);
@@ -39,7 +38,6 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
                     navCollapse.classList.remove('show');
                 }
             }
-            // Scroll after slight delay to let navbar close
             setTimeout(function() {
                 window.scrollTo({
                     top: t.offsetTop - 78,
@@ -49,7 +47,6 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
         }
     });
 });
-
 
 var searchOv = document.getElementById('searchOv');
 
@@ -63,7 +60,6 @@ document.getElementById('navSearchBtn').addEventListener('click', function() {
 
 document.getElementById('searchClose').addEventListener('click', closeSearch);
 
-// Close when clicking backdrop
 searchOv.addEventListener('click', function(e) {
     if (e.target === searchOv) closeSearch();
 });
@@ -73,7 +69,6 @@ function closeSearch() {
     document.body.style.overflow = '';
 }
 
-// Category buttons inside search box
 document.querySelectorAll('.sovcat').forEach(function(btn) {
     btn.addEventListener('click', function() {
         document.querySelectorAll('.sovcat').forEach(function(b) {
@@ -92,7 +87,6 @@ document.querySelectorAll('.sovcat').forEach(function(btn) {
     });
 });
 
-// Trending tags fill the search input
 document.querySelectorAll('.sovtrend .ttag').forEach(function(t) {
     t.addEventListener('click', function() {
         document.getElementById('searchInput').value = this.textContent.trim();
@@ -100,30 +94,25 @@ document.querySelectorAll('.sovtrend .ttag').forEach(function(t) {
     });
 });
 
-
 $(document).ready(function() {
-	$('.magnific_popup').magnificPopup({
-	  disableOn: 700,
-	  type: 'iframe',
-	  mainClass: 'mfp-fade',
-	  removalDelay: 160,
-	  preloader: false,
-	  fixedContentPos: false,
-	  disableOn: 300
-	});	
+    $('.magnific_popup').magnificPopup({
+        disableOn: 700,
+        type: 'iframe',
+        mainClass: 'mfp-fade',
+        removalDelay: 160,
+        preloader: false,
+        fixedContentPos: false,
+        disableOn: 300
+    });
 });
 
-
 function filterMenu(cat) {
-    // sync filter buttons
     document.querySelectorAll('.filtbtn').forEach(function(b) {
         b.classList.toggle('active', b.getAttribute('data-f') === cat);
     });
-    // sync category cards
     document.querySelectorAll('.catcard').forEach(function(c) {
         c.classList.toggle('active', c.getAttribute('data-filter') === cat);
     });
-    // show/hide menu cards
     document.querySelectorAll('.mwrap').forEach(function(w) {
         var c = w.getAttribute('data-c');
         if (cat === 'all' || c === cat) {
@@ -141,14 +130,12 @@ function filterMenu(cat) {
     });
 }
 
-// Filter buttons
 document.querySelectorAll('.filtbtn').forEach(function(btn) {
     btn.addEventListener('click', function() {
         filterMenu(this.getAttribute('data-f'));
     });
 });
 
-// Category section cards â†’ scroll + filter
 document.querySelectorAll('.catcard').forEach(function(card) {
     card.addEventListener('click', function() {
         var f = this.getAttribute('data-filter');
@@ -161,7 +148,6 @@ document.querySelectorAll('.catcard').forEach(function(card) {
         }, 480);
     });
 });
-
 
 var menuPop = document.getElementById('menuPop');
 var mpQty = 1;
@@ -186,7 +172,7 @@ function openMenuPop(card) {
     var full = Math.round(rating),
         empty = 5 - full;
     document.getElementById('mpStars').innerHTML =
-        '<i class="fas fa-star"></i>'.repeat(full) + 'â˜†'.repeat(empty) +
+        '<i class="fas fa-star"></i>'.repeat(full) + '☆'.repeat(empty) +
         ' <span style="color:#bbb;font-size:.78rem;">' + rating + ' (' + reviews + ' reviews)</span>';
 
     document.getElementById('mpDesc').textContent = desc;
@@ -213,14 +199,12 @@ function openMenuPop(card) {
     document.body.style.overflow = 'hidden';
 }
 
-// Card click open popup
 document.querySelectorAll('.mcard').forEach(function(card) {
     card.addEventListener('click', function() {
         openMenuPop(this);
     });
 });
 
-// + button  open popup (stop propagation to avoid double firing)
 document.querySelectorAll('.madd').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -228,7 +212,6 @@ document.querySelectorAll('.madd').forEach(function(btn) {
     });
 });
 
-// Heart toggle (no popup)
 document.querySelectorAll('.mhrt').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -239,7 +222,6 @@ document.querySelectorAll('.mhrt').forEach(function(btn) {
     });
 });
 
-// Close popup
 document.getElementById('mpClose').addEventListener('click', closeMenuPop);
 menuPop.addEventListener('click', function(e) {
     if (e.target === this) closeMenuPop();
@@ -250,7 +232,6 @@ function closeMenuPop() {
     document.body.style.overflow = '';
 }
 
-// Qty +/-
 document.getElementById('mpPlus').addEventListener('click', function() {
     document.getElementById('mpQnum').textContent = ++mpQty;
 });
@@ -258,7 +239,6 @@ document.getElementById('mpMinus').addEventListener('click', function() {
     if (mpQty > 1) document.getElementById('mpQnum').textContent = --mpQty;
 });
 
-// Add to cart button
 document.getElementById('mpAddCart').addEventListener('click', function() {
     var cnt = parseInt(document.getElementById('cartCount').textContent) + mpQty;
     document.getElementById('cartCount').textContent = cnt;
@@ -271,7 +251,6 @@ document.getElementById('mpAddCart').addEventListener('click', function() {
         self.style.background = '';
     }, 1000);
 });
-
 
 document.getElementById('resBtn').addEventListener('click', function() {
     var btn = this;
@@ -289,7 +268,6 @@ document.getElementById('resBtn').addEventListener('click', function() {
     }, 1500);
 });
 
-
 document.getElementById('ctcBtn').addEventListener('click', function() {
     var btn = this;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
@@ -305,7 +283,6 @@ document.getElementById('ctcBtn').addEventListener('click', function() {
         });
     }, 1500);
 });
-
 
 var galPop = document.getElementById('galPop');
 var galData = [];
@@ -349,7 +326,6 @@ document.getElementById('gpNext').addEventListener('click', function() {
     openGal((galIdx + 1) % galData.length);
 });
 
-/*  ESC key closes everything */
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         closeSearch();
@@ -358,7 +334,6 @@ document.addEventListener('keydown', function(e) {
         if (typeof $.magnificPopup !== 'undefined') $.magnificPopup.close();
     }
 });
-
 
 new Swiper('.tesSwiper', {
     slidesPerView: 1,
@@ -381,7 +356,6 @@ new Swiper('.tesSwiper', {
         }
     }
 });
-
 
 var cH = 8,
     cM = 45,
@@ -406,12 +380,11 @@ setInterval(function() {
     document.getElementById('cdS').textContent = String(cS).padStart(2, '0');
 }, 1000);
 
-/* â”€â”€ NEWSLETTER â”€â”€ */
 document.getElementById('nlBtn').addEventListener('click', function() {
     var email = document.getElementById('nlEmail').value;
     if (email && email.includes('@')) {
         var btn = this;
-        btn.textContent = 'âœ“ Subscribed!';
+        btn.textContent = '✓ Subscribed!';
         btn.style.background = '#4ade80';
         btn.style.color = '#222';
         document.getElementById('nlEmail').value = '';
@@ -423,7 +396,6 @@ document.getElementById('nlBtn').addEventListener('click', function() {
     }
 });
 
-/*  NUMBER COUNTER ANIMATION*/
 var numAnimated = false;
 window.addEventListener('scroll', function() {
     var hero = document.getElementById('hero');

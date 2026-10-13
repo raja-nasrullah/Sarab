@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Tables | Gentelella 2026 v4')
+@section('title', 'Tables | Sarab 2026 v4')
 @section('page', 'tables')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>
@@ -16,7 +16,7 @@
                 <div class="page-pretitle">Data</div>
                 <h1 class="page-title">Customers</h1>
             </div>
-            <div class="page-actions">
+            <!-- <div class="page-actions">
                 <button class="btn btn-outline">Docs</button>
                 <button class="btn btn-outline">Export</button>
                 <button class="btn btn-primary">
@@ -25,7 +25,7 @@
                     </svg>
                     Add customer
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -36,14 +36,14 @@
                 <div class="card-subtitle">{{ $customers->count() }} total customers</div>
             </div>
             <div class="card-options" style="display:flex;gap:8px;align-items:center">
-                <div class="search-box" style="width:200px">
+                <!-- <div class="search-box" style="width:200px">
                     <svg class="s-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
                         <circle cx="7" cy="7" r="5"/>
                         <path d="M11 11l3.5 3.5"/>
                     </svg>
                     <input type="text" id="table-search" placeholder="Search customers..." aria-label="Search customers">
-                </div>
-                <button class="btn btn-outline btn-sm">Export CSV</button>
+                </div> -->
+                <!-- <button class="btn btn-outline btn-sm">Export CSV</button> -->
             </div>
         </div>
         <div class="table-responsive">

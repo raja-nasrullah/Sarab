@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
@@ -23,7 +24,7 @@ class ReservationController extends Controller
         $reservations = Reservation::with('customer', 'table')->get();
         return response()->json($reservations);
     }
-    public function store(Request $request)
+        public function store(Request $request)
     {
         // 1. Validate the form data from the public website
         $request->validate([
@@ -33,7 +34,7 @@ class ReservationController extends Controller
             'guests' => 'required|integer|min:1',
             'reservation_date' => 'required|date|after_or_equal:today',
             'reservation_time' => 'required',
-            'table_id' => 'nullable|exists:restaurant_tables,id', // ✅ Added validation for table
+            'table_id' => 'nullable|exists:restaurant_tables,id', 
             'request' => 'nullable|string|max:500',
         ]);
 
@@ -49,14 +50,23 @@ class ReservationController extends Controller
         // 3. Create the Reservation linked to the customer's ID
         $reservation = Reservation::create([
             'customer_id' => $customer->id,
-            'table_id' => $request->table_id, // ✅ Save the selected table
+            'table_id' => $request->table_id, 
             'reservation_date' => $request->reservation_date,
             'reservation_time' => $request->reservation_time,
             'guests' => $request->guests,
             'status' => 'pending',
         ]);
 
-        // 4. Redirect back with a success message
+        // ✅ CRITICAL FIX: CHECK IF POSTMAN IS CALLING THIS
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Your table has been reserved!',
+                'data' => $reservation->load('customer', 'table')
+            ], 201);
+        }
+
+        // 4. Redirect back with a success message (For your Public Website)
         return redirect()->route('reservation')->with('success', 'Your table has been reserved! We will confirm shortly.');
     }
 
@@ -108,21 +118,29 @@ class ReservationController extends Controller
     }
 
 // Store the reservation from the admin panel
-    public function storeAddreservation(Request $request)
-    {
-        $request->validate([
-            'customer_id' => 'nullable|exists:customers,id',
-            'table_id' => 'nullable|exists:restaurant_tables,id',
-            'reservation_date' => 'required|date|after_or_equal:today',
-            'reservation_time' => 'required',
-            'guests' => 'required|integer|min:1',
-            'status' => 'sometimes|in:pending,confirmed,cancelled',
-        ]);
+    // Store the reservation from the admin panel
+public function storeAddreservation(Request $request)
+{
+    $request->validate([
+        'customer_id' => 'nullable|exists:customers,id',
+        'table_id' => 'nullable|exists:restaurant_tables,id',
+        'reservation_date' => 'required|date|after_or_equal:today',
+        'reservation_time' => 'required',
+        'guests' => 'required|integer|min:1',
+        'status' => 'sometimes|in:pending,confirmed,cancelled',
+    ]);
 
-        Reservation::create($request->all());
+    // ✅ 1. Get the data
+    $data = $request->all();
 
-        return redirect()->route('admin.reservations')->with('success', 'Reservation added successfully!');
-    }
+    // ✅ 2. Add the logged-in Admin's ID (Only if you have a 'user_id' column!)
+    $data['user_id'] = Auth::id(); 
+
+    // ✅ 3. Create the reservation with the modified data
+    Reservation::create($data);
+
+    return redirect()->route('admin.reservations')->with('success', 'Reservation added successfully!');
+}
 // Show the edit reservation form
     public function editreservation($id)
     {

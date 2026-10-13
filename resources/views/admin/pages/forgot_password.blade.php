@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Forgot password | Gentelella 2026 v4')
+@section('title', 'Forgot password | Sarab 2026 v4')
 @section('page', 'forgot-password')
 
 {{-- Override sidebar for auth pages --}}
@@ -12,7 +12,7 @@
         <div class="auth-card">
             <div class="auth-brand">
                 <div class="brand-icon">G</div>
-                <div class="brand-name">Gentelella <small style="font-weight:400;color:var(--text-muted);font-size:13px;margin-left:2px">v4</small></div>
+                <div class="brand-name">Sarab <small style="font-weight:400;color:var(--text-muted);font-size:13px;margin-left:2px">v4</small></div>
             </div>
 
             <div class="auth-title">Forgot your password?</div>

@@ -139,52 +139,69 @@
             <div class="sline"></div>
             <p class="sdesc mx-auto" style="max-width:480px;">From sizzling burgers to exotic world cuisines - find your favourite in our menu</p>
         </div>
+
         <div class="row g-3 justify-content-center">
             <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-aos-delay="0">
-                <div class="catcard active" data-filter="all">
+                <a href="{{ route('menu', ['category' => 'all']) }}" class="catcard">
                     <img class="catimg" src="{{ asset('assets/website/img/category/1.jpg') }}" alt="All Items">
                     <div class="catnm">All Items</div>
                     <div class="catct">99 items</div>
-                </div>
+                </a>
             </div>
+
             <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-aos-delay="70">
-                <div class="catcard" data-filter="burgers">
+                <a href="{{ route('menu', ['category' => 'burgers']) }}" class="catcard">
                     <img class="catimg" src="{{ asset('assets/website/img/category/2.jpg') }}" alt="Burgers">
                     <div class="catnm">Burgers</div>
                     <div class="catct">24 items</div>
-                </div>
+                </a>
             </div>
+
             <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-aos-delay="140">
-                <div class="catcard" data-filter="pizza">
+                <a href="{{ route('menu', ['category' => 'pizza']) }}" class="catcard">
                     <img class="catimg" src="{{ asset('assets/website/img/category/3.jpg') }}" alt="Pizza">
                     <div class="catnm">Pizza</div>
                     <div class="catct">18 items</div>
-                </div>
+                </a>
             </div>
+
             <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-aos-delay="210">
-                <div class="catcard" data-filter="chicken">
+                <a href="{{ route('menu', ['category' => 'chicken']) }}" class="catcard">
                     <img class="catimg" src="{{ asset('assets/website/img/category/4.jpg') }}" alt="Fried Chicken">
                     <div class="catnm">Fried Chicken</div>
                     <div class="catct">15 items</div>
-                </div>
+                </a>
             </div>
+
             <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-aos-delay="280">
-                <div class="catcard" data-filter="wraps">
+                <a href="{{ route('menu', ['category' => 'wraps']) }}" class="catcard">
                     <img class="catimg" src="{{ asset('assets/website/img/category/5.jpg') }}" alt="Wraps">
                     <div class="catnm">Wraps</div>
                     <div class="catct">12 items</div>
-                </div>
+                </a>
             </div>
+
             <div class="col-6 col-sm-4 col-md-3 col-lg-2" data-aos="zoom-in" data-aos-delay="350">
-                <div class="catcard" data-filter="desserts">
+                <a href="{{ route('menu', ['category' => 'desserts']) }}" class="catcard">
                     <img class="catimg" src="{{ asset('assets/website/img/category/6.jpg') }}" alt="Desserts">
                     <div class="catnm">Desserts</div>
                     <div class="catct">20 items</div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
 </section>
+
+<style>
+/* Make the anchor behave like the original card block */
+#category .catcard {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+</style>
 
 <!-- ABOUT -->
 <section id="about">

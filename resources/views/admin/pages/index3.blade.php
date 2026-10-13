@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Sales dashboard | Gentelella 2026 v4')
+@section('title', 'Sales dashboard | Sarab 2026 v4')
 @section('page', 'dashboard-3')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>
@@ -16,10 +16,10 @@
                 <div class="page-pretitle">Sales</div>
                 <h1 class="page-title">Pipeline & performance</h1>
             </div>
-            <div class="page-actions">
+            <!-- <div class="page-actions">
                 <button class="btn btn-outline">Q1 2026</button>
                 <button class="btn btn-primary">+ New deal</button>
-            </div>
+            </div> -->
         </div>
     </div>
   <!-- ── Row 1: Pipeline KPIs ── -->

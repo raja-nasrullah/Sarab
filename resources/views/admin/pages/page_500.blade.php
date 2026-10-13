@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Server error | Gentelella 2026 v4')
+@section('title', 'Server error | Sarab 2026 v4')
 @section('page', 'error.500')
 
 {{-- Override sidebar for error page --}}

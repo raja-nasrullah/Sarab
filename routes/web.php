@@ -21,8 +21,8 @@ use Illuminate\Support\Facades\Route;
 | ADMIN SUBDOMAIN ROUTES (admin.sarab.site) - ALL ADMIN ROUTES HERE
 |--------------------------------------------------------------------------
 */
-Route::domain('admin.sarab.site')->group(function () {
-    
+// Route::domain('admin.sarab.site')->group(function () {
+   Route::prefix('admin')->group(function (){ 
     // Admin Login Routes (No middleware)
     Route::get('/', [AuthController::class, 'showAdminLogin'])->name('admin.login');
     Route::post('/login', [AuthController::class, 'adminLogin'])->name('admin.login.post');
@@ -40,6 +40,7 @@ Route::domain('admin.sarab.site')->group(function () {
 
         // --- Orders & Invoices ---
         Route::get('/orders', [OrderController::class, 'adminIndex'])->name('admin.orders');
+        Route::get('/orders/export', [OrderController::class, 'exportCsv'])->name('admin.orders.export');
         Route::put('/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
         Route::get('/order/detail', function () { return view('admin.pages.order_detail'); })->name('admin.order.detail');
 

@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Contact Messages | Gentelella 2026 v4')
+@section('title', 'Contact Messages | Sarab 2026 v4')
 @section('page', 'contacts')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>
@@ -13,13 +13,13 @@
                 <div class="page-pretitle">Team</div>
                 <h1 class="page-title">Contact Messages</h1>
             </div>
-            <div class="page-actions">
+            <!-- <div class="page-actions">
                 <button class="btn btn-outline">Export CSV</button>
                 <button class="btn btn-primary">
                     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 8h8M8 4v8"/></svg>
                     Refresh
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -76,7 +76,7 @@
                         ${subject}
                     </div>
                     <div style="display:flex;gap:6px;justify-content:center;margin-bottom:12px">
-                        <button class="btn btn-outline btn-sm" data-action="message">Reply</button>
+                        <!-- <button class="btn btn-outline btn-sm" data-action="message">Reply</button> -->
                         <button class="btn btn-primary btn-sm" data-action="view">View</button>
                     </div>
                     <div class="stats">

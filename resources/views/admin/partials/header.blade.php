@@ -1,33 +1,33 @@
 {{-- resources/views/partials/header.blade.php --}}
 <header class="topbar">
     <div class="topbar-left">
-        <button class="sidebar-toggle" type="button" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">
+        <!-- <button class="sidebar-toggle" type="button" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                 <path d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
-        </button>
-        <nav class="breadcrumb" aria-label="Breadcrumb">
+        </button> -->
+        <!-- <nav class="breadcrumb" aria-label="Breadcrumb">
             <span class="current" aria-current="page">Home</span>
-        </nav>
+        </nav> -->
     </div>
 
-    <div class="search-box">
+    <!-- <div class="search-box">
         <svg class="s-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <circle cx="7" cy="7" r="5"></circle>
             <path d="M11 11l3.5 3.5"></path>
         </svg>
         <input type="text" id="topbar-search" placeholder="Search pages or run a command…" aria-label="Search">
         <kbd>⌘K</kbd>
-    </div>
+    </div> -->
 
     <div class="topbar-right">
-        <a class="tb-btn tb-docs" href="https://gentelella.colorlib.com/docs/" target="_blank" rel="noopener" title="Documentation">
+        <!-- <a class="tb-btn tb-docs" href="https://Sarab.colorlib.com/docs/" target="_blank" rel="noopener" title="Documentation">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                 <path d="M4 4h11a4 4 0 014 4v13H8a4 4 0 01-4-4V4z"></path>
                 <path d="M4 17a4 4 0 014-4h11"></path>
             </svg>
             <span>Docs</span>
-        </a>
+        </a> -->
 
         <button class="tb-btn theme-toggle" type="button" title="Toggle theme" aria-label="Toggle theme" aria-pressed="false">
             <svg class="theme-icon-light" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -39,20 +39,20 @@
             </svg>
         </button>
 
-        <button class="tb-btn tb-notifications" type="button" title="Notifications" aria-label="Notifications" aria-haspopup="dialog" aria-expanded="false">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path d="M12 3a6 6 0 00-6 6c0 6-3 7-3 7h18s-3-1-3-7a6 6 0 00-6-6z"></path>
-                <path d="M10.5 21a1.5 1.5 0 003 0"></path>
-            </svg>
-            <span class="dot"></span>
-        </button>
+        <a href="{{ route('admin.contacts') }}" class="tb-btn tb-notifications" title="Notifications" aria-label="Notifications">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M12 3a6 6 0 00-6 6c0 6-3 7-3 7h18s-3-1-3-7a6 6 0 00-6-6z"></path>
+        <path d="M10.5 21a1.5 1.5 0 003 0"></path>
+    </svg>
+    <span class="dot"></span>
+</a>
 
-        <button class="tb-btn tb-messages" type="button" title="Messages" aria-label="Messages" aria-haspopup="dialog" aria-expanded="false">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <rect x="2" y="4" width="20" height="16" rx="3"></rect>
-                <path d="M2 7l10 6 10-6"></path>
-            </svg>
-        </button>
+       <a href="{{ route('admin.chat') }}" class="tb-btn tb-messages" title="Messages" aria-label="Messages">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <rect x="2" y="4" width="20" height="16" rx="3"></rect>
+        <path d="M2 7l10 6 10-6"></path>
+    </svg>
+</a>
 
         {{-- ============================================ --}}
         {{-- PROFILE DROPDOWN --}}

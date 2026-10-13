@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Reservations | Gentelella 2026 v4')
+@section('title', 'Reservations | Sarab 2026 v4')
 @section('page', 'reservations')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>
@@ -102,7 +102,6 @@
                 <table class="table" id="reservationsTable" style="width:100%;border-collapse:collapse;">
                     <thead>
                         <tr style="border-bottom:1px solid var(--border-color);">
-                            {{-- ✅ THESE COLUMN NAMES MUST MATCH YOUR CONTROLLER DATA KEYS EXACTLY --}}
                             <th>ID</th>
                             <th>Customer</th>
                             <th>Table</th>
@@ -140,7 +139,7 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        // 1. Initialize DataTable
+        // Initialize DataTable with search box hidden
         var table = $('#reservationsTable').DataTable({
             processing: true,
             serverSide: true,
@@ -158,17 +157,17 @@
             responsive: true,
             order: [[0, 'desc']],
             pageLength: 10,
+            searching: false,          // 👈 Hides the search box
             language: {
                 processing: '<i class="fas fa-spinner fa-spin"></i> Loading...'
             }
         });
 
-        // 2. Keep your existing Status Filter functionality
+        // Status filter
         const statusFilter = document.getElementById('status-filter');
         if (statusFilter) {
             statusFilter.addEventListener('change', function() {
                 const selectedStatus = this.value.toLowerCase();
-                // Apply the filter to DataTables (Status is column index 6)
                 if (selectedStatus === 'all') {
                     table.column(6).search('').draw();
                 } else {

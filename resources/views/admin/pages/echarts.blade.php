@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'ECharts | Gentelella 2026 v4')
+@section('title', 'ECharts | Sarab 2026 v4')
 @section('page', 'echarts')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>

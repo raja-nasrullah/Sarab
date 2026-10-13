@@ -1,12 +1,14 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Invoices | Gentelella 2026 v4')
+@section('title', 'Invoice ' . $invoice->invoice_number . ' | Sarab 2026 v4')
 @section('page', 'invoices')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>
     <span class="breadcrumb-item">Billing</span>
     <span class="breadcrumb-separator">/</span>
-    <span class="breadcrumb-item active">Invoices</span>
+    <a href="{{ route('admin.invoices') }}" class="breadcrumb-item">Invoices</a>
+    <span class="breadcrumb-separator">/</span>
+    <span class="breadcrumb-item active">{{ $invoice->invoice_number }}</span>
 @endsection
 
 @section('content')
@@ -14,130 +16,84 @@
         <div class="page-header-row">
             <div>
                 <div class="page-pretitle">Billing</div>
-                <h1 class="page-title">Invoices</h1>
+                <h1 class="page-title">Invoice {{ $invoice->invoice_number }}</h1>
             </div>
             <div class="page-actions">
-                <button class="btn btn-outline">Export CSV</button>
+                <a href="{{ route('admin.invoices') }}" class="btn btn-outline">← Back to Invoices</a>
+                <button class="btn btn-primary" onclick="window.print()">Print</button>
             </div>
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header">
+    <div class="card" style="padding:24px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:24px;">
             <div>
-                <div class="card-title">All Invoices</div>
-                <div class="card-subtitle">Manage all billing records</div>
+                <h2 style="font-size:18px;font-weight:700;margin:0;">Invoice Details</h2>
+                <p style="color:var(--text-muted);font-size:13px;margin:4px 0 0;">{{ $invoice->invoice_number }}</p>
+            </div>
+            <div style="text-align:right;">
+                <span style="background:{{ $invoice->status == 'paid' ? '#28a74520' : '#ffc10720' }};color:{{ $invoice->status == 'paid' ? '#28a745' : '#ffc107' }};padding:6px 16px;border-radius:12px;font-size:12px;font-weight:600;">
+                    {{ ucfirst($invoice->status) }}
+                </span>
             </div>
         </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                {{-- YAJRA DATATABLE FOR INVOICES --}}
-                <table class="table" id="invoicesTable" style="width:100%;border-collapse:collapse;">
-                    <thead>
-                        <tr style="border-bottom:1px solid var(--border-color);">
-                            <th>Invoice #</th>
-                            <th>Order #</th>
-                            <th>Customer</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                            <th style="text-align:right;">Action</th>
-                        </tr>
-                    </thead>
-                </table>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+            <div>
+                <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Billed To</div>
+                <div style="font-weight:600;margin-top:4px;">{{ $invoice->order->customer->name ?? 'Guest' }}</div>
+                <div style="color:var(--text-muted);font-size:13px;">{{ $invoice->order->customer->email ?? '-' }}</div>
+<div style="color:var(--text-muted);font-size:13px;">{{ $invoice->order->phone ?? $invoice->order->customer->phone ?? '-' }}</div>           </div>
+            <div style="text-align:right;">
+                <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Order #</div>
+                <div style="font-weight:600;margin-top:4px;">#{{ $invoice->order->id ?? '-' }}</div>
+                <div style="font-size:13px;color:var(--text-muted);margin-top:8px;">
+                    Issued: {{ \Carbon\Carbon::parse($invoice->issued_date)->format('M d, Y') }}<br>
+                    Due: {{ \Carbon\Carbon::parse($invoice->due_date)->format('M d, Y') }}
+                </div>
+            </div>
+        </div>
+
+        <table class="table" style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+            <thead>
+                <tr style="border-bottom:1px solid var(--border-color);">
+                    <th style="text-align:left;padding:12px 0;">Item</th>
+                    <th style="text-align:center;padding:12px 0;">Qty</th>
+                    <th style="text-align:right;padding:12px 0;">Price</th>
+                    <th style="text-align:right;padding:12px 0;">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($invoice->order->orderItems as $item)
+                    <tr style="border-bottom:1px solid var(--border-color);">
+                        <td style="padding:12px 0;">{{ $item->menuItem->name ?? 'Item' }}</td>
+                        <td style="text-align:center;padding:12px 0;">{{ $item->quantity }}</td>
+                        <td style="text-align:right;padding:12px 0;">${{ number_format($item->price, 2) }}</td>
+                        <td style="text-align:right;padding:12px 0;font-weight:600;">${{ number_format($item->price * $item->quantity, 2) }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        <div style="display:flex;justify-content:flex-end;">
+            <div style="min-width:280px;">
+                <div style="display:flex;justify-content:space-between;padding:6px 0;">
+                    <span style="color:var(--text-muted);">Subtotal</span>
+                    <span>${{ number_format($invoice->subtotal ?? 0, 2) }}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;">
+                    <span style="color:var(--text-muted);">Discount ({{ $invoice->discount_percent ?? 0 }}%)</span>
+                    <span>-${{ number_format(($invoice->subtotal ?? 0) * ($invoice->discount_percent ?? 0) / 100, 2) }}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;">
+                    <span style="color:var(--text-muted);">Tax ({{ $invoice->tax_percent ?? 0 }}%)</span>
+                    <span>+${{ number_format(($invoice->subtotal ?? 0) * ($invoice->tax_percent ?? 0) / 100, 2) }}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:12px 0;border-top:2px solid var(--border-color);margin-top:6px;font-size:18px;font-weight:700;">
+                    <span>Total</span>
+                    <span>${{ number_format($invoice->total_amount ?? 0, 2) }}</span>
+                </div>
             </div>
         </div>
     </div>
-@endsection
-
-@push('styles')
-<style>
-    .stat { display: flex; align-items: center; gap: 16px; padding: 16px; }
-    .stat-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; }
-    .stat-content { flex: 1; min-width: 0; }
-    .stat-label { font-size: 12px; color: var(--text-muted); margin-bottom: 2px; }
-    .stat-value-row { display: flex; align-items: center; gap: 8px; }
-    .stat-value { font-size: 20px; font-weight: 700; color: var(--text); }
-    .stat-change { font-size: 12px; font-weight: 600; }
-    .stat-subtext { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-    .tb-btn { width: 28px; height: 28px; border: none; background: transparent; border-radius: var(--radius-sm); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); transition: background 120ms, color 120ms; }
-    .tb-btn:hover { background: var(--bg-surface-secondary); color: var(--text); }
-</style>
-@endpush
-
-@section('scripts')
-<script>
-    $(document).ready(function() {
-        // 1. Initialize DataTable for Invoices
-        var table = $('#invoicesTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "/admin/invoices/data",
-            columns: [
-                { 
-                    data: 'invoice_number', 
-                    name: 'invoice_number',
-                    render: function(data) { 
-                        return '<span style="font-weight:500;color:var(--text);">' + data + '</span>'; 
-                    }
-                },
-                { 
-                    data: 'order_id', 
-                    name: 'order_id',
-                    render: function(data) { 
-                        return '<a href="' + '{{ route('admin.orders') }}' + '" style="color:var(--primary);text-decoration:none;">#' + data + '</a>'; 
-                    }
-                },
-                { 
-                    data: 'customer', 
-                    name: 'customer',
-                    render: function(data) {
-                        if (!data) return 'Guest';
-                        var initial = data.substring(0, 2).toUpperCase();
-                        return '<div style="display:flex;align-items:center;gap:8px;"><div style="width:32px;height:32px;border-radius:50%;background:#1abb9c;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px;">' + initial + '</div><span style="font-weight:500;">' + data + '</span></div>';
-                    }
-                },
-                { 
-                    data: 'total_amount', 
-                    name: 'total_amount',
-                    render: function(data) { 
-                        return '<span style="font-weight:600;">$' + parseFloat(data).toFixed(2) + '</span>'; 
-                    }
-                },
-                { 
-                    data: 'status', 
-                    name: 'status',
-                    render: function(data) {
-                        var bg = data == 'paid' ? '#28a74520' : '#ffc10720';
-                        var color = data == 'paid' ? '#28a745' : '#ffc107';
-                        return '<span style="background:' + bg + ';color:' + color + ';padding:4px 12px;border-radius:12px;font-size:11px;font-weight:600;">' + data.charAt(0).toUpperCase() + data.slice(1) + '</span>';
-                    }
-                },
-                { 
-                    data: 'created_at', 
-                    name: 'created_at',
-                    render: function(data) { 
-                        return '<span style="font-size:13px;color:var(--text-muted);">' + new Date(data).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + '</span>'; 
-                    }
-                },
-                { 
-                    data: 'id', 
-                    name: 'id',
-                    orderable: false, 
-                    searchable: false,
-                    render: function(data) { 
-                        // ✅ FIXED: Used direct URL concatenation without Laravel route()
-                        return '<div style="display:flex;justify-content:flex-end;"><a href="/admin/invoice/' + data + '" class="tb-btn" aria-label="View Invoice" title="View Invoice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></a></div>'; 
-                    }
-                }
-            ],
-            responsive: true,
-            order: [[0, 'desc']],
-            pageLength: 10,
-            language: {
-                processing: '<i class="fas fa-spinner fa-spin"></i> Loading...'
-            }
-        });
-    });
-</script>
 @endsection

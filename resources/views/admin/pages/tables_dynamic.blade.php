@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Dynamic Tables | Gentelella 2026 v4')
+@section('title', 'Dynamic Tables | Sarab 2026 v4')
 @section('page', 'tables-dynamic')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>

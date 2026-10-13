@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Forbidden | Gentelella 2026 v4')
+@section('title', 'Forbidden | Sarab 2026 v4')
 @section('page', 'error.403')
 
 {{-- Override sidebar for error page --}}

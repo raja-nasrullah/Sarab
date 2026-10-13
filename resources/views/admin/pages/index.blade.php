@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Dashboard | Gentelella 2026 v4')
+@section('title', 'Dashboard | Sarab 2026 v4')
 @section('page', 'dashboard')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>
@@ -175,7 +175,7 @@
                 </div>
             </div>
             <div class="card-body" style="padding:8px 16px">
-                <ul class="activity-list">
+                <ul class="activity-list" id="orderActivityList">
                     <li class="activity-item">
                         <div class="activity-avatar" style="background:linear-gradient(135deg,var(--primary),var(--primary-dk))">SK</div>
                         <div>
@@ -258,7 +258,7 @@
                             <tr>
                                 <td class="cell-mono">#7840</td>
                                 <td><div class="cell-customer"><div class="cell-avatar" style="background:var(--azure)">AS</div><span class="cell-strong">Anna Smith</span></div></td>
-                                <td>Gentelella Theme</td>
+                                <td>Sarab Theme</td>
                                 <td class="cell-strong">$89</td>
                                 <td><span class="status status-blue">Processing</span></td>
                                 <td>Feb 13</td>
@@ -424,3 +424,101 @@
         </div>
     </div>
 @endsection
+
+{{-- Add Pusher JavaScript at the bottom --}}
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Request notification permission
+            if (Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+
+            // Check if Echo is available
+            if (typeof window.Echo !== 'undefined') {
+                window.Echo.channel('admin-orders')
+                    .listen('NewOrderPlaced', (e) => {
+                        console.log('New Order Placed:', e); // Debug: See what's coming
+
+                        // 1. Show browser notification
+                        if (Notification.permission === 'granted') {
+                            new Notification('🛒 New Order Created!', {
+                                body: `Order #${e.order_id} placed by ${e.customer_name || 'Customer'} - $${e.total_amount}`,
+                                icon: '/path/to/your/icon.png'
+                            });
+                        }
+
+                        // 2. Add to activity list dynamically
+                        const activityList = document.getElementById('orderActivityList');
+                        if (activityList) {
+                            const newItem = document.createElement('li');
+                            newItem.className = 'activity-item';
+                            newItem.style.animation = 'fadeIn 0.5s';
+                            newItem.innerHTML = `
+                                <div class="activity-avatar" style="background:linear-gradient(135deg,var(--green),#1a8a32)">🛒</div>
+                                <div>
+                                    <div class="activity-body"><strong>New Order #${e.order_id}</strong> by ${e.customer_name || 'Customer'}</div>
+                                    <div class="activity-time">Just now 🔔</div>
+                                </div>
+                            `;
+                            activityList.prepend(newItem);
+                            
+                            // Limit to 10 items
+                            while (activityList.children.length > 10) {
+                                activityList.removeChild(activityList.lastChild);
+                            }
+                        }
+
+                        // 3. Show toast notification
+                        showToast(`🛒 New Order #${e.order_id} from ${e.customer_name || 'Customer'} - $${e.total_amount}`);
+                    });
+            } else {
+                console.warn('Echo is not available.');
+            }
+        });
+
+        // Toast notification helper
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #10b981, #059669);
+                color: white;
+                padding: 16px 24px;
+                border-radius: 8px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                z-index: 9999;
+                font-weight: 500;
+                animation: slideIn 0.5s ease;
+                max-width: 350px;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.5s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 5000);
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+@endpush

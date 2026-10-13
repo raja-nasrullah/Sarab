@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Sign up | Gentelella 2026 v4')
+@section('title', 'Sign up | Sarab 2026 v4')
 @section('page', 'register')
 
 {{-- Override sidebar for auth page --}}
@@ -14,7 +14,7 @@
   <div class="auth-card">
     <div class="auth-brand">
       <div class="brand-icon">G</div>
-      <div class="brand-name">Gentelella <small style="font-weight:400;color:var(--text-muted);font-size:13px;margin-left:2px">v4</small></div>
+      <div class="brand-name">Sarab <small style="font-weight:400;color:var(--text-muted);font-size:13px;margin-left:2px">v4</small></div>
     </div>
 
     <div class="auth-title">Create your account</div>

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Orders | Gentelella 2026 v4')
+@section('title', 'Orders | Sarab 2026 v4')
 @section('page', 'orders')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>
@@ -17,8 +17,8 @@
                 <h1 class="page-title">Orders</h1>
             </div>
             <div class="page-actions">
-                <button class="btn btn-outline">Export CSV</button>
-                <button class="btn btn-primary">+ Manual order</button>
+                <a href="{{ route('admin.orders.export') }}" class="btn btn-outline">Export CSV</a>
+                <!-- <button class="btn btn-primary">+ Manual order</button> -->
             </div>
         </div>
     </div>
@@ -116,8 +116,7 @@
                         @foreach($orders as $order)
                         <tr style="border-bottom:1px solid var(--border-color);">
                             <td style="padding:12px 16px;">
-                                <a href="#" style="color:var(--primary);font-weight:500;text-decoration:none;">#{{ $order->id }}</a>
-                            </td>
+                                <a href="{{ route('admin.order.detail', ['id' => $order->id]) }}" style="color:var(--primary);font-weight:500;text-decoration:none;">#{{ $order->id }}</a>                            </td>
                             <td style="padding:12px 16px;">
                                 <div style="display:flex;align-items:center;gap:8px;">
                                     <div style="width:32px;height:32px;border-radius:50%;background:{{ ['#1abb9c', '#3498db', '#9b59b6', '#f39c12', '#e74c3c', '#2ecc71'][$loop->index % 6] }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px;">
@@ -138,7 +137,13 @@
                                 </select>
                             </td>
                             
-                            <td style="padding:12px 16px;font-size:12px;color:var(--text-muted);">Card •••• 4242</td>
+                            <td style="padding:12px 16px;font-size:12px;color:var(--text-muted);">
+    @php
+        $pm = $order->payment_method ?? 'N/A';
+        $pmLabel = ucfirst(str_replace('_', ' ', $pm));
+    @endphp
+    {{ $pmLabel }}
+</td>
                             <td style="padding:12px 16px;font-size:13px;color:var(--text-muted);">{{ \Carbon\Carbon::parse($order->order_date)->format('M d, Y') }}</td>
                             
                             {{-- ✅ ACTION COLUMN WITH INVOICE ICON --}}
@@ -181,115 +186,146 @@
 </style>
 @endpush
 
+
 @section('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Filter by status
+    document.addEventListener('DOMContentLoaded', function () {
+
+        /* ============================================
+           STATUS FILTER (client-side row hiding)
+        ============================================ */
         const statusFilter = document.getElementById('status-filter');
-        const tbody = document.getElementById('orders-tbody');
+        const tbody        = document.getElementById('orders-tbody');
 
         if (statusFilter) {
-            statusFilter.addEventListener('change', function() {
+            statusFilter.addEventListener('change', function () {
                 const selectedStatus = this.value.toLowerCase();
-
-                const rows = tbody.querySelectorAll('tr');
-
-                rows.forEach(row => {
-                    const statusDropdown = row.querySelector('td:nth-child(5) select');
-                    if (statusDropdown) {
-                        const rowStatus = statusDropdown.value.toLowerCase();
-
-                        if (selectedStatus === 'all' || rowStatus === selectedStatus) {
-                            row.style.display = '';
-                        } else {
-                            row.style.display = 'none';
-                        }
-                    }
+                tbody.querySelectorAll('tr').forEach(row => {
+                    const sel = row.querySelector('.status-dropdown');
+                    if (!sel) return;
+                    const rowStatus = sel.value.toLowerCase();
+                    row.style.display = (selectedStatus === 'all' || rowStatus === selectedStatus) ? '' : 'none';
                 });
             });
         }
 
-        // ============================================
-        // ✅ HANDLE STATUS DROPDOWN CHANGE
-        // ============================================
-        document.querySelectorAll('.status-dropdown').forEach(dropdown => {
-            dropdown.addEventListener('change', function() {
-                const orderId = this.getAttribute('data-order-id');
-                const newStatus = this.value;
+        /* ============================================
+           STATUS DROPDOWN → PUT /admin/orders/{id}/status
+           (delegated listener = single binding, no double fires)
+        ============================================ */
+        tbody.addEventListener('change', function (e) {
+            if (!e.target.classList.contains('status-dropdown')) return;
 
-                // Send AJAX request to update status
-                fetch(`/admin/orders/${orderId}/status`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({ status: newStatus })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        showNotification('✅ Order status updated to ' + newStatus, 'success');
-                        
-                        // ✅ CRITICAL FIX: Instantly update the Invoice column for this row!
-                        if (newStatus === 'completed') {
-                            const row = this.closest('tr');
-                            const actionCell = row.querySelector('td:last-child');
-                            
-                            // Replace the "N/A" with an instant Invoice Icon
-                            actionCell.innerHTML = `
-                                <a href="/admin/invoice/${data.invoice_id}" class="tb-btn" aria-label="View Invoice" title="View Invoice">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
-                                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/>
-                                        <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
-                                    </svg>
-                                </a>
-                            `;
-                        }
-                    } else {
-                        showNotification('❌ Failed: ' + data.message, 'error');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    showNotification('❌ Network error updating status.', 'error');
-                });
+            const selectEl  = e.target;
+            const orderId   = selectEl.dataset.orderId;
+            const newStatus = selectEl.value;
+            const row       = selectEl.closest('tr');
+
+            fetch(`/admin/orders/${orderId}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ status: newStatus })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success) {
+                    showNotification('❌ Failed: ' + data.message, 'error');
+                    return;
+                }
+
+                // Keep dropdown in sync with DB
+                selectEl.value = data.status;
+
+                showNotification('✅ Order status updated to ' + newStatus, 'success');
+
+                // Update the action cell (invoice icon or "N/A")
+                const actionCell = row.querySelector('td:last-child');
+
+                if (newStatus === 'completed' && data.invoice_id) {
+                    actionCell.innerHTML = `
+                        <a href="/admin/invoice/${data.invoice_id}" class="tb-btn" title="View Invoice" aria-label="View Invoice">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/>
+                                <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                            </svg>
+                        </a>`;
+                } else {
+                    actionCell.innerHTML = `<span style="font-size:10px;color:var(--text-muted);">N/A</span>`;
+                }
+            })
+            .catch(err => {
+                console.error('Error:', err);
+                showNotification('❌ Network error updating status.', 'error');
             });
         });
+
+        /* ============================================
+           PUSHER REAL-TIME NOTIFICATIONS
+        ============================================ */
+        if (typeof window.Echo !== 'undefined') {
+            console.log('🔊 Pusher connected!');
+
+            window.Echo.channel('admin-orders')
+                .listen('NewOrderPlaced', (e) => {
+                    console.log('🆕 New Order:', e);
+                    showNotification('🆕 New Order #' + e.order_id + ' - $' + e.total_amount, 'success');
+                    setTimeout(() => location.reload(), 1500);
+                })
+                .listen('OrderStatusUpdated', (e) => {
+                    console.log('🔄 Order Status Updated:', e);
+                    showNotification('🔄 Order #' + e.order_id + ' ' + e.old_status + ' → ' + e.new_status, 'info');
+                });
+        } else {
+            console.warn('⚠️ Echo not initialized');
+        }
     });
 
-    // ============================================
-    // ✅ TOAST NOTIFICATION HELPER
-    // ============================================
+    /* ============================================
+       TOAST HELPER
+    ============================================ */
     function showNotification(message, type = 'success') {
-        // Remove existing toasts
         const existing = document.querySelector('.custom-toast');
         if (existing) existing.remove();
 
         const notification = document.createElement('div');
         notification.className = 'custom-toast';
+
+        let bgColor = '#28a745';
+        if (type === 'error')        bgColor = '#dc3545';
+        else if (type === 'info')    bgColor = '#17a2b8';
+        else if (type === 'warning') bgColor = '#ffc107';
+
         notification.style.cssText = `
             position: fixed; top: 20px; right: 20px; padding: 12px 24px;
-            background: ${type === 'success' ? '#28a745' : '#dc3545'};
-            color: white; border-radius: 8px; z-index: 9999;
+            background: ${bgColor};
+            color: ${type === 'warning' ? '#212529' : 'white'};
+            border-radius: 8px; z-index: 9999;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             animation: slideIn 0.3s ease; font-size: 14px; font-weight: 500;
         `;
         notification.textContent = message;
         document.body.appendChild(notification);
-        
+
         setTimeout(() => {
             notification.style.animation = 'slideOut 0.3s ease';
             setTimeout(() => notification.remove(), 300);
         }, 3000);
     }
 
-    // Inject CSS animations dynamically
-    const style = document.createElement('style');
-    style.innerHTML = `
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
-    `;
-    document.head.appendChild(style);
+    /* ============================================
+       Inject animation CSS once
+    ============================================ */
+    if (!document.getElementById('pusher-styles')) {
+        const style = document.createElement('style');
+        style.id = 'pusher-styles';
+        style.innerHTML = `
+            @keyframes slideIn  { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0);     opacity: 1; } }
+            @keyframes slideOut { from { transform: translateX(0);    opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+        `;
+        document.head.appendChild(style);
+    }
 </script>
 @endsection

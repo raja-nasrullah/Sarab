@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Profile | Gentelella 2026 v4')
+@section('title', 'Profile | Sarab 2026 v4')
 @section('page', 'profile')
 @section('breadcrumb')
     <span class="breadcrumb-separator">/</span>
@@ -28,13 +28,13 @@
     <div class="card">
       <div class="card-body" style="text-align:center;padding:24px 16px">
         <div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dk));margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:white;font-size:32px;font-weight:600">A</div>
-        <div style="font-size:16px;font-weight:600;color:var(--text)">Aigars Silkalns</div>
-        <div style="font-size:12.5px;color:var(--text-muted);margin-top:2px">Admin · Latvia</div>
+        <div style="font-size:16px;font-weight:600;color:var(--text)">Admin</div>
+        <div style="font-size:12.5px;color:var(--text-muted);margin-top:2px">Admin</div>
         <div style="margin-top:14px;display:flex;gap:6px;justify-content:center">
           <button class="btn btn-outline btn-sm">Change avatar</button>
         </div>
       </div>
-      <div style="border-top:1px solid var(--border-color-light)">
+      <!-- <div style="border-top:1px solid var(--border-color-light)">
         <div class="profile-ring-box" style="padding:16px">
           <div class="ring-wrap">
             <svg viewBox="0 0 80 80">
@@ -46,7 +46,7 @@
           <div class="note">Profile completion</div>
           <a href="#" class="ring-link">Complete now →</a>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <!-- Profile form -->
@@ -61,18 +61,18 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-label" for="firstName">First name</label>
-            <input type="text" id="firstName" class="form-control" value="Aigars">
+            <input type="text" id="firstName" class="form-control" value="Admin">
           </div>
           <div class="form-group">
             <label class="form-label" for="lastName">Last name</label>
-            <input type="text" id="lastName" class="form-control" value="Silkalns">
+            <input type="text" id="lastName" class="form-control" value="User">
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label class="form-label" for="email2">Email <span class="required">*</span></label>
-            <input type="email" id="email2" class="form-control" value="aigars@colorlib.com">
+            <input type="email" id="email2" class="form-control" value="admin@gmail.com">
           </div>
           <div class="form-group">
             <label class="form-label" for="phone">Phone</label>
@@ -103,7 +103,7 @@
     </div>
   </div>
 
-  <div class="row col-2">
+  <!-- <div class="row col-2">
     <div class="card">
       <div class="card-header">
         <div>
@@ -157,10 +157,10 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- ── Stats + Achievements row ── -->
-  <div class="row col-4-8">
+  <!-- <div class="row col-4-8">
     <div class="card">
       <div class="card-header"><div class="card-title">Account stats</div></div>
       <div class="card-body" style="padding:0">
@@ -240,10 +240,10 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- ── Connected accounts + Activity timeline ── -->
-  <div class="row col-2">
+  <!-- <div class="row col-2">
     <div class="card">
       <div class="card-header">
         <div>
@@ -322,7 +322,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
 </div>
 @endsection

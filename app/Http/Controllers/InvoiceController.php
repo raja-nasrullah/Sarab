@@ -58,28 +58,25 @@ class InvoiceController extends Controller
     /**
      * Display the specified invoice (For your View page)
      */
-    public function show($id)
-    {
-        $invoice = Invoice::with('order.customer', 'order.orderItems.menuItem')->find($id);
+public function show($id)
+{
+    $invoice = Invoice::with('order.customer', 'order.orderItems.menuItem')->find($id);
 
-        if (!$invoice) {
-            return redirect()->route('admin.orders')->with('error', 'Invoice not found');
-        }
-
-        return view('admin.pages.invoice', compact('invoice'));
+    if (!$invoice) {
+        return redirect()->route('admin.orders')->with('error', 'Invoice not found');
     }
 
-    /**
-     * Display a listing of the invoices (For your Sidebar list)
-     */
-    public function index()
-    {
-        $invoiceList = Invoice::with('order.customer', 'order.orderItems.menuItem')
-                        ->orderBy('created_at', 'desc')
-                        ->get();
+    return view('admin.pages.invoice', compact('invoice'));  // ✅ single-invoice view
+}
 
-        return view('admin.pages.invoice', compact('invoiceList'));
-    }
+public function index()
+{
+    $invoiceList = Invoice::with('order.customer', 'order.orderItems.menuItem')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
+    return view('admin.pages.invoice-list', compact('invoiceList'));  // ✅ list view
+}
 
     /**
      * Update the specified invoice in storage.

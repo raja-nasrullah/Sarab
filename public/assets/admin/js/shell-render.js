@@ -1,4 +1,4 @@
-// Gentelella 2026 v4 — shell render (pure)
+// Sarab 2026 v4 — shell render (pure)
 // String-only renderers. No DOM, no window/document access.
 // Imported by:
 //   1. The Vite plugin (vite.config.js) to inject shell HTML at build/dev time.
@@ -194,7 +194,7 @@ export function renderSidebar(activeKey) {
     <aside class="sidebar" aria-label="Primary navigation">
       <div class="sidebar-brand">
         <div class="brand-icon">G</div>
-        <div class="brand-name">Gentelella <small>v4</small></div>
+        <div class="brand-name">Sarab <small>v4</small></div>
       </div>
       <nav class="sidebar-nav">${groups}</nav>
       <div class="sidebar-footer">
@@ -233,7 +233,7 @@ export function renderTopbar(breadcrumb) {
         <kbd>⌘K</kbd>
       </div>
       <div class="topbar-right">
-        <a class="tb-btn tb-docs" href="https://gentelella.colorlib.com/docs/" target="_blank" rel="noopener" title="Documentation">
+        <a class="tb-btn tb-docs" href="https://Sarab.colorlib.com/docs/" target="_blank" rel="noopener" title="Documentation">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h11a4 4 0 014 4v13H8a4 4 0 01-4-4V4z"/><path d="M4 17a4 4 0 014-4h11"/></svg>
           <span>Docs</span>
         </a>
@@ -257,7 +257,7 @@ export function renderTopbar(breadcrumb) {
 export function renderFooter() {
   return `
     <footer class="footer">
-      <span>Gentelella — A free Bootstrap admin template by <a href="https://colorlib.com">Colorlib</a></span>
+      <span>Sarab — A free Bootstrap admin template by <a href="https://colorlib.com">Colorlib</a></span>
       <span>v4.0 Concept · 2026</span>
     </footer>
   `;

@@ -38,15 +38,15 @@
                                     <div style="display:flex; align-items:center; justify-content:center; height:100%; color:#999; font-size:10px;">No Img</div>
                                 @endif
                             </div>
-                            
+
                             <div class="ms-3 flex-grow-1">
                                 <h5 class="mb-1 fw-bold">{{ $details['name'] }}</h5>
                                 <div class="text-muted small">Qty: {{ $details['quantity'] }}</div>
                             </div>
-                            
+
                             <div class="text-end d-flex align-items-center gap-3">
                                 <h5 class="mb-0 text-danger fw-bold">${{ number_format($details['price'] * $details['quantity'], 2) }}</h5>
-                                
+
                                 <!-- DELETE BUTTON -->
                                 <button onclick="removeFromCart({{ $id }})" class="btn btn-sm btn-outline-danger" style="border-radius: 50%; width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;">
                                     <i class="fas fa-trash"></i>
@@ -69,7 +69,7 @@
                 <div class="card border-0 shadow-sm p-4" style="border-radius: 12px; position: sticky; top: 20px;">
                     <h4 class="fw-bold mb-3">Order Summary</h4>
                     <hr>
-                    
+
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Subtotal</span>
                         <span class="fw-bold">${{ number_format($total, 2) }}</span>
@@ -79,7 +79,7 @@
                         <span class="text-success fw-bold">FREE</span>
                     </div>
                     <hr>
-                    
+
                     <div class="d-flex justify-content-between mb-4">
                         <span class="fw-bold fs-5">Total</span>
                         <span class="fw-bold fs-5 text-danger">${{ number_format($total, 2) }}</span>
@@ -88,15 +88,51 @@
                     @if(count($cart) > 0)
                     <form action="{{ route('place-order') }}" method="POST">
                         @csrf
-                        
+
+                        {{-- Full Name --}}
                         <div class="mb-3">
                             <label class="flbl">Full Name *</label>
-                            <input type="text" name="customer_name" class="fctrl form-control" placeholder="John Doe" required>
+                            <input type="text" name="customer_name" class="fctrl form-control"
+                                   placeholder="John Doe" value="{{ old('customer_name') }}" required>
                         </div>
-                        
+
+                        {{-- Email --}}
                         <div class="mb-3">
                             <label class="flbl">Email Address *</label>
-                            <input type="email" name="customer_email" class="fctrl form-control" placeholder="you@email.com" required>
+                            <input type="email" name="customer_email" class="fctrl form-control"
+                                   placeholder="you@email.com" value="{{ old('customer_email') }}" required>
+                        </div>
+
+                        {{-- ✅ NEW: Phone --}}
+                        <div class="mb-3">
+                            <label class="flbl">Phone Number *</label>
+                            <input type="tel" name="customer_phone" class="fctrl form-control"
+                                   placeholder="+1 (800) 000-0000" value="{{ old('customer_phone') }}" required>
+                        </div>
+
+                        {{-- ✅ NEW: Delivery Address --}}
+                        <div class="mb-3">
+                            <label class="flbl">Delivery Address *</label>
+                            <textarea name="customer_address" class="fctrl form-control" rows="2"
+                                      placeholder="House #, Street, Area, City"
+                                      required>{{ old('customer_address') }}</textarea>
+                        </div>
+
+                        {{-- ✅ NEW: Payment Method --}}
+                        <div class="mb-3">
+                            <label class="flbl">Payment Method *</label>
+                            <select name="payment_method" class="fctrl form-control" required>
+                                <option value="">Select payment</option>
+                                <option value="cash_on_delivery" {{ old('payment_method') == 'cash_on_delivery' ? 'selected' : '' }}>
+                                    Cash on Delivery
+                                </option>
+                                <option value="card" {{ old('payment_method') == 'card' ? 'selected' : '' }}>
+                                    Credit / Debit Card
+                                </option>
+                                <option value="upi" {{ old('payment_method') == 'upi' ? 'selected' : '' }}>
+                                    UPI / Wallet
+                                </option>
+                            </select>
                         </div>
 
                         <!-- Hidden inputs to pass cart items to OrderController -->
