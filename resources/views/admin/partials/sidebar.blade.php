@@ -44,7 +44,6 @@
                         <line x1="9" y1="21" x2="9" y2="9"/>
                     </svg>
                     <span>Tables</span>
-                    <span class="badge badge-new" style="margin-left:auto;background:#3498db;color:white;padding:2px 8px;border-radius:12px;font-size:9px;line-height:1.4;text-transform:uppercase;font-weight:700">New</span>
                     <svg class="nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
                         <polyline points="6 9 12 15 18 9"/>
                     </svg>
