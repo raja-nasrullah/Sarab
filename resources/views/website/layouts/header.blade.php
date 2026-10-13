@@ -229,10 +229,10 @@
                 </button>
 
                 <!-- 🛒 ADDED: CART LINK WITH BADGE -->
-                <a href="{{ route('cart.show') }}" class="cart-btn-container" title="View Cart">
+                <!-- <a href="{{ route('cart.show') }}" class="cart-btn-container" title="View Cart">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-badge" id="cartBadge">0</span>
-                </a>
+                </a> -->
                 
                 @if(Session::has('user'))
                     <!-- User Dropdown -->
