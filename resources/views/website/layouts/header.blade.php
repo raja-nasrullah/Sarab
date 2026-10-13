@@ -223,7 +223,7 @@
                 </li>
             </ul>
 
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2" style="gap:16px;">
                 <!-- <button id="navSearchBtn" title="Search">
                     <i class="fas fa-search"></i>
                 </button> -->
