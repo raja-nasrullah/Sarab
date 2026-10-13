@@ -1,6 +1,6 @@
 <aside class="sidebar">
     <div class="sidebar-header">
-        <a href="{{ route('home') }}" class="sidebar-brand">
+        <a href="{{ route('admin.dashboard') }}" class="sidebar-brand">
             <div class="brand-icon">S</div>
             <div class="brand-name">Sarab</div>
         </a>
