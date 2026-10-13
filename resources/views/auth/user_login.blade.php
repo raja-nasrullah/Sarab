@@ -76,11 +76,11 @@
             </form>
 
             <div class="auth-divider">or continue with</div>
-
+<!-- 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
                 <button class="btn btn-outline" style="justify-content:center">Google</button>
                 <button class="btn btn-outline" style="justify-content:center">GitHub</button>
-            </div>
+            </div> -->
 
             <div class="auth-footer">
                 Don't have an account? <a href="{{ route('register') }}">Create one</a>
