@@ -23,7 +23,7 @@
         <div class="auth-card">
             <div class="auth-brand">
                 <div class="brand-icon">S</div>
-                <div class="brand-name">Sarab <small style="font-weight:400;color:var(--text-muted);font-size:13px;margin-left:2px">v4</small></div>
+                <div class="brand-name">Sarab </div>
             </div>
 
             <div class="auth-title">Welcome back</div>
