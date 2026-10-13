@@ -14,7 +14,7 @@
                 <div class="page-pretitle">Overview</div>
                 <h1 class="page-title">Dashboard</h1>
             </div>
-            <div class="page-actions">
+            <!-- <div class="page-actions">
                 <button class="btn btn-outline">
                     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg>
                     New view
@@ -23,7 +23,7 @@
                     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 8h8M8 4v8"/></svg>
                     Create report
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 
