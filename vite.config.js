@@ -6,8 +6,10 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'public/assets/admin/scss/main.scss',  // ← Full path from project root
-                'public/assets/admin/js/app.js'        // ← Full path from project root
+                'public/assets/admin/scss/main.scss',
+                'public/assets/admin/js/app.js',
+                'resources/css/app.css',
+                'resources/js/app.js',
             ],
             refresh: true,
         }),
